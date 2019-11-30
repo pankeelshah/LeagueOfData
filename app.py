@@ -10,8 +10,16 @@ import re
 
 csrf = CSRFProtect()
 app = Flask(__name__)
-app.config["SECRET_KEY"] = 'RGAPI-46336dee-2590-441c-be36-b0dfcce868ec'  
+app.config["SECRET_KEY"] = 'RGAPI-9c414491-3eff-467b-a256-7b5599792a19'  
 csrf.init_app(app)
+
+@app.route('/')
+def default():
+    return redirect(url_for('index'))
+
+@app.route('/index')
+def index():
+    return render_template("index.html")
 
 @app.route('/proxy/<summoner_name>')
 def proxy(summoner_name):
