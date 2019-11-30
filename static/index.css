@@ -1,0 +1,51 @@
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+.wrapper {
+  min-height: 100%;
+  background-color: #e7e6e3;
+  margin-bottom: -50px;
+}
+
+.navbar navbar-inverse{
+    background-color: #89f5a2;
+}
+
+#title{
+    font-size: 60pt;
+    font-weight: bold;
+    color: #d1363a;
+}
+
+#inputSection{
+    text-align: center;
+    padding-top: 2.5%;
+}
+
+.footer,
+.push {
+  height: 50px;
+}
+
+.footer{
+  background-color: #252423;
+  color: #a3a3a3;
+  text-align: center;
+}
+
+#playerStatsBtn{
+    background-color: #d1363a;
+    border-color: #d1363a;
+}
+ 
+#optionSelect{
+    display: flex;
+    justify-content: center;
+}
+ 
+#optionSelect input[type="text"]::placeholder{
+    text-align: left;
+}
+

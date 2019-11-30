@@ -2,19 +2,30 @@
     <head>
         <link rel="stylesheet" href="/static/index.css">
         <script src="/static/index.js"></script>
-        <title>test</title>
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+        <title>LeagueData</title>
+        <link rel="shortcut icon" type="image/png" href="/images/favicon.png"/>
     </head>
     <body>
         <div class="wrapper">
             {% block navbar %}
-            <nav>
-                <h1>test</h1>
+            <nav class="navbar navbar-inverse">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="">LeagueData</a>
+                    </div>
+
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="index.html">Home</a></li>
+                    </ul>
+                </div>
             </nav>
             {% endblock %}
 
             <div id="inputSection">
-                <h1 id="title">test</h1>
-
+                
                 {% block content %}
                 default content
                 {% endblock %}
@@ -24,10 +35,11 @@
         </div>
         {% block footer %}
         <footer class="footer">
-            <a href="https://dictionaryapi.com/" target="_blank" >Powered by Merriam-Webster Dictionary API</a>
-            <br>
-            <a href="https://github.com/pankeelshah/WordList" target="_blank" >Github Repository</a>
-        </footer>    
+            LeagueData isn't endorsed by Riot Games and doesn't reflect the views or opinions of 
+            Riot Games or anyone officially involved in producing or managing League of Legends. <br>
+            League of Legends and Riot Games are trademarks or registered trademarks of Riot Games, 
+            Inc. League of Legends © Riot Games, Inc.
+        </footer>  
         {% endblock %}
     </body>
 </html>

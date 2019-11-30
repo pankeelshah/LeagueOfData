@@ -7,6 +7,7 @@ from wtforms import StringField, SubmitField
 import wtforms
 from wtforms.validators import Regexp
 import re
+import json
 
 csrf = CSRFProtect()
 app = Flask(__name__)
@@ -21,9 +22,18 @@ def default():
 def index():
     return render_template("index.html")
 
-@app.route('/proxy/<summoner_name>')
-def proxy(summoner_name):
-    result = requests.get(f'https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/' + summoner_name + '?api_key=' + app.config["SECRET_KEY"])
+@app.route('/proxy/<region>/<summoner_name>')
+def proxy(region, summoner_name):
+    #First request to get id
+    result = requests.get('https://' + region + '.api.riotgames.com/lol/summoner/v4/summoners/by-name/' + summoner_name + '?api_key=' + app.config["SECRET_KEY"])
+    json_data = result.json()
+    account_id = json_data['id']
+
+    #Second request to get account data
+    url = 'https://na1.api.riotgames.com/lol/league/v4/entries/by-summoner/' + account_id + '?api_key=' + app.config["SECRET_KEY"]
+    print(url)
+    result = requests.get(url)
     resp = Response(result.text)
     resp.headers['Content-Type'] = 'application/json'
+    print(resp)
     return resp

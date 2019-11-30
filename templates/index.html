@@ -1,4 +1,29 @@
 {% extends "base.html" %}
 {% block content %}
-    <p>test</p>
+
+<div id="inputSection">
+    <h1 id="title">LeagueData</h1>
+
+    <div id="optionSelect">
+        <div>
+            <input type="text" class="form-control" id="username" value="bluepancake69" placeholder="Summoner Name">
+        </div>
+        
+        <div>
+            <select class="form-control" id="region">
+            <option value="na1">NA</option>
+            <option value="euw1">EUW</option>
+            <option value="eun1">EUN</option>
+            </select>
+        </div>
+        <input id="playerStatsBtn" type="submit" class="btn btn-info" onclick="getPlayerStats()" value="Search">
+    </div>
+
+    <br>
+
+    <div>  
+        <table id = "fortDataTable" class="table table-light"></table>
+    </div>
+
+</div>
 {% endblock %}
