@@ -26,14 +26,13 @@ def index():
 def proxy(region, summoner_name):
     #First request to get id
     result = requests.get('https://' + region + '.api.riotgames.com/lol/summoner/v4/summoners/by-name/' + summoner_name + '?api_key=' + app.config["SECRET_KEY"])
+    print(str(result))
     json_data = result.json()
     account_id = json_data['id']
 
     #Second request to get account data
     url = 'https://na1.api.riotgames.com/lol/league/v4/entries/by-summoner/' + account_id + '?api_key=' + app.config["SECRET_KEY"]
-    print(url)
     result = requests.get(url)
     resp = Response(result.text)
     resp.headers['Content-Type'] = 'application/json'
-    print(resp)
     return resp

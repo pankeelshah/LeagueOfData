@@ -17,7 +17,7 @@ async function getPlayerStats(){
 
     jr.then( 
         function(data){
-            console.log(data);
+            createTableStats(data);
         }
     ).catch(
         function(data){
@@ -28,10 +28,10 @@ async function getPlayerStats(){
 
 function createTableStats(data){
   
-    var fortDataTable = document.querySelector("#fortDataTable");
+    var leagueDataTable = document.querySelector("#leagueDataTable");
   
     //Reset Table
-    fortDataTable.innerHTML = "";
+    leagueDataTable.innerHTML = "";
   
     //Initialize table headers
     if(data.error == "Player Not Found"){
@@ -96,8 +96,8 @@ function createTableStats(data){
       }
   
       // Setting table head and body
-      fortDataTable.appendChild(thead);
-      fortDataTable.appendChild(tbody);
+      leagueDataTable.appendChild(thead);
+      leagueDataTable.appendChild(tbody);
       // console.log(data.accountId);
     }
     document.querySelector("#username").disabled = false;
