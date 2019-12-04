@@ -11,7 +11,7 @@ import json
 
 csrf = CSRFProtect()
 app = Flask(__name__)
-app.config["SECRET_KEY"] = 'RGAPI-9c414491-3eff-467b-a256-7b5599792a19'  
+app.config["SECRET_KEY"] = 'RGAPI-61561ff9-ab11-489e-8ae2-492d6786185d'  
 csrf.init_app(app)
 
 @app.route('/')

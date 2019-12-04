@@ -17,6 +17,7 @@ async function getPlayerStats(){
 
     jr.then( 
         function(data){
+            console.log(data);
             createTableStats(data);
         }
     ).catch(
