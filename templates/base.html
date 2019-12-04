@@ -2,27 +2,34 @@
     <head>
         <link rel="stylesheet" href="/static/index.css">
         <script src="/static/index.js"></script>
-        
+        <!-- <script src="/static/fonts.css"></script>
+        <script src="/static/riotgames.css"></script> -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-
+        <link rel="stylesheet" type="text/css" href="https://s.lolstatic.com/awesomefonts/1.0.0/lol-fonts.css">
+        <link rel="stylesheet" href="https://static.developer.riotgames.com/css/new.1.6.6.css">
         <title>LeagueData</title>
-        <!-- <link rel="shortcut icon" type="image/png" href="/images/favicon.png"/> -->
         <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.png') }}">
     </head>
     <body>
         <div class="wrapper">
             {% block navbar %}
-            <nav class="navbar navbar-inverse">
-                <div class="container-fluid">
-                    <div class="navbar-header">
-                        <a class="navbar-brand" href="">LeagueData</a>
-                    </div>
-
-                    <ul class="nav navbar-nav">
-                        <li class="active"><a href="index.html">Home</a></li>
+            <div class="navbar bg-color1">
+                <div class="navbar-logo">
+                    <a href="/"><img src="https://static.developer.riotgames.com/img/logo.png"></a>
+                </div>
+                <button type="button" class="navbar-toggler">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-menu">
+                    <ul>
+                        <li><a href="/index">Home</a></li>
+                        <li><a href="/">2</a></li>
+                        <li><a href="/">3</a></li>
+                        <li><a href="/">4</a></li>
                     </ul>
                 </div>
-            </nav>
+            </div>
+           
             {% endblock %}
 
             <div id="inputSection">
