@@ -53,6 +53,8 @@ function createTableStats(data){
       createTableRow("Rank", ob.rank, tbody);
       createTableRow("Wins", ob.wins, tbody);
       createTableRow("Losses", ob.losses, tbody);
+      var winrate = parseInt((ob.wins / (ob.losses + ob.wins))*100) + "%"
+      createTableRow("Win Rate", winrate, tbody);
       createTableRow("", "", tbody);
 
       // Setting table body
