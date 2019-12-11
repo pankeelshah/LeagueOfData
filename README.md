@@ -12,5 +12,5 @@
 1. List of Views and their short description (No more than 50 words for each view)
 1. List of Tables, their Structure and short description
 1. References/Resources:
-  * https://getbootstrap.com/
-  * https://www.w3schools.com/
+    * https://getbootstrap.com/
+    * https://www.w3schools.com/
