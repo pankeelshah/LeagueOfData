@@ -10,7 +10,7 @@ html, body {
 }
 
 .navbar navbar-inverse{
-    background-color: #89f5a2;
+    background-color: #252423;
 }
 
 #title{
@@ -49,3 +49,16 @@ html, body {
     text-align: left;
 }
 
+p#tableText{
+    color: white;
+    font-weight: bold;
+}
+
+.navbar-logo img {
+    height: 50px;
+    vertical-align: middle;
+}
+
+.navbar-inverse {
+    background-color: #252423 !important;
+}

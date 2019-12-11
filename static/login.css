@@ -1,0 +1,12 @@
+#optionSelect{
+    display: flex;
+    justify-content: center;
+}
+
+.form-signin {
+    width:30%; 
+    height:50%; 
+    vertical-align:auto;
+    background-color:white; 
+    margin:0 auto;
+}
