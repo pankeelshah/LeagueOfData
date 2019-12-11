@@ -24,9 +24,11 @@
                     </div>
                     </div>
                     <ul class="nav navbar-nav">
-                    <li {% block home %} {% endblock %}><a href="/index">Home</a></li>
-                    <li {% block login %} {% endblock %}><a href="/login">Login</a></li>
-                    <li {% block news %} {% endblock %}><a href="/news">News</a></li>
+                        <li {% block home %} {% endblock %}><a href="/index">Home</a></li>
+                        <li {% block news %} {% endblock %}><a href="/news">News</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav" id="test">
+                        <li {% block login %} {% endblock %}><a href="/login">Login</a></li>
                     </ul>
                 </div>
             </nav>

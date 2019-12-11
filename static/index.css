@@ -62,3 +62,12 @@ p#tableText{
 .navbar-inverse {
     background-color: #252423 !important;
 }
+
+.navbar-nav{
+    float: left !important;
+}
+
+#test{
+    float: right !important;
+}
+
