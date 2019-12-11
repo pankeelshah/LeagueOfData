@@ -2,6 +2,7 @@
     <head>
         <link rel="stylesheet" href="/static/index.css">
         <script src="/static/index.js"></script>
+        <script src="/static/news.js"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
         <!-- <link rel="stylesheet" type="text/css" href="https://s.lolstatic.com/awesomefonts/1.0.0/lol-fonts.css">
         <link rel="stylesheet" href="https://static.developer.riotgames.com/css/new.1.6.6.css"> -->
@@ -11,7 +12,7 @@
         
         {% endblock %}
     </head>
-    <body>
+    <body {% block onload %}{% endblock %}>
         <div class="wrapper">
             {% block navbar %}
 
@@ -25,7 +26,7 @@
                     <ul class="nav navbar-nav">
                     <li {% block home %} {% endblock %}><a href="/index">Home</a></li>
                     <li {% block login %} {% endblock %}><a href="/login">Login</a></li>
-                    
+                    <li {% block news %} {% endblock %}><a href="/news">News</a></li>
                     </ul>
                 </div>
             </nav>

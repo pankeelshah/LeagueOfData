@@ -30,6 +30,10 @@ def login():
 def signup():
     return render_template("signup.html")
 
+@app.route('/news')
+def news():
+    return render_template("news.html")
+
 @app.route('/proxy/<region>/<summoner_name>')
 def proxy(region, summoner_name):
     #First request to get id

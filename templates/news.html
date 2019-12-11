@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block onload %}onload = "getNews()"{% endblock %}
+{% block news %} class="active"  {% endblock %}
+{% block head %}
+<link rel="stylesheet" href="/static/news.css">
+<script src="/static/news.js"></script>
+{% endblock %}
+
+{% block content %}
+<div  id="searchbar" class="active-cyan-3 active-cyan-4 mb-4">
+    <div>
+        <input id="search" onkeydown="test()" class="form-control" type="text" placeholder="Search" aria-label="Search">
+    </div>
+</div>
+<div class="cardContainer" id="wrapper"></div>
+{% endblock %}
