@@ -1,9 +1,7 @@
 async function getNews(){
     // console.log("test");
-    var url = 'https://newsapi.org/v2/everything?' + 'q=League of Legends&' + 'pageSize=100&' + 'apiKey=b1af8f73115e4ced9713842b854e198e';
-    
+    var url = 'proxy/news/league-of-legends';
     let promise = fetch(encodeURI(url));
-
     let jr = promise.then(function(resp){
         return resp.json();
     })
@@ -11,18 +9,14 @@ async function getNews(){
     jr.then( 
         function(data){
         var articles = data.articles;
-
         var aLen = articles.length;
         var mainDiv = document.querySelector(".cardContainer");
         count = 1;
         for(var i = 0; i < aLen; i++){
-            //console.log(articles[i]);
-            if(articles[i].title.toLowerCase().includes("fortnite")){
             displayNews(mainDiv, articles[i], count);
             count++;
-            }
-            
         }
+        console.log(count);
         }
     )
 }

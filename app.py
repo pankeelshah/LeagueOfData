@@ -47,3 +47,11 @@ def proxy(region, summoner_name):
     resp = Response(result.text)
     resp.headers['Content-Type'] = 'application/json'
     return resp
+
+@app.route('/proxy/news/<type>')
+def proxynews(type):
+    url = 'https://newsapi.org/v2/everything?' + 'q=' + type + '&' + 'pageSize=100&' + 'apiKey=b1af8f73115e4ced9713842b854e198e'
+    result = requests.get(url)
+    resp = Response(result.text)
+    resp.headers['Content-Type'] = 'application/json'
+    return resp
