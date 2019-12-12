@@ -1,0 +1,78 @@
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+.wrapper {
+  min-height: 100%;
+  background-color: #252423;
+  margin-bottom: -50px;
+}
+
+.navbar navbar-inverse{
+    background-color: #252423;
+}
+
+#title{
+    font-size: 60pt;
+    font-weight: bold;
+    color: #d1363a;
+}
+
+#inputSection{
+    text-align: center;
+    padding-top: 2.5%;
+}
+
+.footer,
+.push {
+  height: 50px;
+}
+
+.footer{
+  background-color: #252423;
+  color: #a3a3a3;
+  text-align: center;
+}
+
+#playerStatsBtn{
+    background-color: #d1363a;
+    border-color: #d1363a;
+}
+ 
+#optionSelect{
+    display: flex;
+    justify-content: center;
+}
+ 
+#optionSelect input[type="text"]::placeholder{
+    text-align: left;
+}
+
+p#tableText{
+    color: white;
+    font-weight: bold;
+}
+
+p#tableHeadText{
+    color: white;
+    font-weight: bold;
+}
+
+.navbar-logo img {
+    height: 50px;
+    vertical-align: middle;
+}
+
+.navbar-inverse {
+    background-color: #252423 !important;
+}
+
+.navbar-nav{
+    float: left !important;
+}
+
+#test{
+    float: right !important;
+}
+

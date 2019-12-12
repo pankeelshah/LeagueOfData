@@ -34,6 +34,10 @@ def signup():
 def news():
     return render_template("news.html")
 
+@app.route('/leaderboard')
+def leaderboard():
+    return render_template("leaderboard.html")
+
 @app.route('/proxy/<region>/<summoner_name>')
 def proxy(region, summoner_name):
     #First request to get id
@@ -51,6 +55,14 @@ def proxy(region, summoner_name):
 @app.route('/proxy/news/<type>')
 def proxynews(type):
     url = 'https://newsapi.org/v2/everything?' + 'q=' + type + '&' + 'pageSize=100&' + 'apiKey=b1af8f73115e4ced9713842b854e198e'
+    result = requests.get(url)
+    resp = Response(result.text)
+    resp.headers['Content-Type'] = 'application/json'
+    return resp
+
+@app.route('/proxy/challenger')
+def proxychallenger():
+    url = 'https://na1.api.riotgames.com/lol/league/v4/challengerleagues/by-queue/RANKED_SOLO_5x5?api_key=' + app.config["SECRET_KEY"]
     result = requests.get(url)
     resp = Response(result.text)
     resp.headers['Content-Type'] = 'application/json'

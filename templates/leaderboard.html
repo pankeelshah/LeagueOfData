@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block onload %}onload = "getLeaderboard()"{% endblock %}
+{% block leaderboard %} class="active"  {% endblock %}
+{% block head %}
+<link rel="stylesheet" href="/static/leaderboard.css">
+<script src="/static/leaderboard.js"></script>
+{% endblock %}
+
+{% block content %}
+<div>  
+    <table id = "leagueDataTable" class="table table-light"></table>
+</div>
+{% endblock %}
