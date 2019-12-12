@@ -9,7 +9,7 @@ async function getRotation(){
         function(data){
             var dataLength = data.freeChampionIds.length;
             var mainDiv = document.querySelector(".cardContainer");
-            for(var i = 0; i < aLen; i++){
+            for(var i = 0; i < dataLength; i++){
                 displayNews(mainDiv, data.freeChampionIds[i], i + 1);
             }
         }
