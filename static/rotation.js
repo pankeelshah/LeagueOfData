@@ -18,6 +18,11 @@ async function getRotation(){
 }
 
 function displayChampions(mainDiv, id, count){
+
+    var champion_name = d[id];
+    var img_link = "/static/champion/splash/" + champion_name + "_0.jpg";
+    console.log(img_link);
+
     // var wrapper = document.querySelector("#wrapper");
     var cardDiv = document.createElement("div");
     cardDiv.id = "cardDiv";
@@ -31,17 +36,17 @@ function displayChampions(mainDiv, id, count){
 
     // https://leagueoflegends.fandom.com/wiki/Jax
     var link = document.createElement("a");
-    link.href = "https://leagueoflegends.fandom.com/wiki/Jax";
+    link.href = "https://leagueoflegends.fandom.com/wiki/" + champion_name;
     link.id = "link"
     link.target = "_blank";
 
     // get image from folder
     var img = document.createElement("img");
     img.className = "card-img-bottom";
-    img.src = "test";
+    img.src = img_link;
     img.alt = "Card image";
     img.style.width = "100%";
-    img.style.height =  "50%";
+    img.style.height =  "85%";
 
     var cardBody = document.createElement("div");
     cardBody.className = "card-body";
@@ -49,12 +54,12 @@ function displayChampions(mainDiv, id, count){
     // champion name
     var title = document.createElement("h4");
     title.className = "card-title";
-    title.innerHTML = id;
+    title.innerHTML = champion_name;
 
     // not sure
-    var discription = document.createElement("p");
-    discription.className = "card-text";
-    discription.innerHTML = d[id];
+    // var discription = document.createElement("p");
+    // discription.className = "card-text";
+    // discription.innerHTML = d[id];
 
     mainDiv.appendChild(cardDiv);
     cardDiv.appendChild(card);
@@ -62,5 +67,5 @@ function displayChampions(mainDiv, id, count){
     link.appendChild(img);
     link.appendChild(cardBody);
     cardBody.appendChild(title);
-    cardBody.appendChild(discription);
+    //cardBody.appendChild(discription);
 }
