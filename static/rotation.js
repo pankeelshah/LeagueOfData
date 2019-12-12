@@ -1,5 +1,6 @@
+var d = {'133': 'Quinn', '164': 'Camille', '131': 'Diana', '498': 'Xayah', '136': 'AurelionSol', '134': 'Syndra', '497': 'Rakan', '24': 'Jax', '25': 'Morgana', '26': 'Zilean', '27': 'Singed', '20': 'Nunu', '21': 'MissFortune', '22': 'Ashe', '23': 'Tryndamere', '28': 'Evelynn', '29': 'Twitch', '222': 'Jinx', '4': 'TwistedFate', '8': 'Vladimir', '163': 'Taliyah', '120': 'Hecarim', '121': 'Khazix', '122': 'Darius', '267': 'Nami', '266': 'Aatrox', '126': 'Jayce', '127': 'Lissandra', '268': 'Azir', '59': 'JarvanIV', '58': 'Renekton', '55': 'Katarina', '54': 'Malphite', '57': 'Maokai', '56': 'Nocturne', '51': 'Caitlyn', '50': 'Swain', '53': 'Blitzcrank', '412': 'Thresh', '115': 'Ziggs', '114': 'Fiora', '117': 'Lulu', '89': 'Leona', '111': 'Nautilus', '110': 'Varus', '113': 'Sejuani', '112': 'Viktor', '82': 'Mordekaiser', '83': 'Yorick', '80': 'Pantheon', '81': 'Ezreal', '86': 'Garen', '84': 'Akali', '85': 'Kennen', '429': 'Kalista', '3': 'Galio', '7': 'Leblanc', '523': 'Aphelios', '421': 'RekSai', '420': 'Illaoi', '427': 'Ivern', '245': 'Ekko', '246': 'Qiyana', '240': 'Kled', '102': 'Shyvana', '103': 'Ahri', '101': 'Xerath', '106': 'Volibear', '107': 'Rengar', '104': 'Graves', '105': 'Fizz', '39': 'Irelia', '38': 'Kassadin', '33': 'Rammus', '32': 'Amumu', '31': 'Chogath', '30': 'Karthus', '37': 'Sona', '36': 'DrMundo', '35': 'Shaco', '34': 'Anivia', '518': 'Neeko', '432': 'Bard', '517': 'Sylas', '516': 'Ornn', '60': 'Elise', '61': 'Orianna', '62': 'Wukong', '63': 'Brand', '64': 'LeeSin', '67': 'Vayne', '68': 'Rumble', '69': 'Cassiopeia', '254': 'Vi', '145': 'Kaisa', '2': 'Olaf', '6': 'Urgot', '99': 'Lux', '98': 'Shen', '91': 'Talon', '90': 'Malzahar', '92': 'Riven', '223': 'TahmKench', '161': 'Velkoz', '96': 'KogMaw', '11': 'MasterYi', '10': 'Kayle', '13': 'Ryze', '12': 'Alistar', '15': 'Sivir', '14': 'Sion', '17': 'Teemo', '16': 'Soraka', '19': 'Warwick', '18': 'Tristana', '150': 'Gnar', '154': 'Zac', '157': 'Yasuo', '555': 'Pyke', '238': 'Zed', '235': 'Senna', '236': 'Lucian', '48': 'Trundle', '119': 'Draven', '44': 'Taric', '45': 'Veigar', '42': 'Corki', '43': 'Karma', '40': 'Janna', '41': 'Gangplank', '1': 'Annie', '5': 'XinZhao', '9': 'Fiddlesticks', '201': 'Braum', '203': 'Kindred', '202': 'Jhin', '142': 'Zoe', '143': 'Zyra', '141': 'Kayn', '77': 'Udyr', '76': 'Nidalee', '75': 'Nasus', '74': 'Heimerdinger', '72': 'Skarner', '79': 'Gragas', '78': 'Poppy', '350': 'Yuumi'};
+
 async function getRotation(){
-    // console.log("test");
     var url = 'proxy/rotation';
     let promise = fetch(encodeURI(url));
     let jr = promise.then(function(resp){
@@ -10,13 +11,13 @@ async function getRotation(){
             var dataLength = data.freeChampionIds.length;
             var mainDiv = document.querySelector(".cardContainer");
             for(var i = 0; i < dataLength; i++){
-                displayNews(mainDiv, data.freeChampionIds[i], i + 1);
+                displayChampions(mainDiv, data.freeChampionIds[i], i + 1);
             }
         }
     )
 }
 
-function displayNews(mainDiv, article, count){
+function displayChampions(mainDiv, id, count){
     // var wrapper = document.querySelector("#wrapper");
     var cardDiv = document.createElement("div");
     cardDiv.id = "cardDiv";
@@ -30,14 +31,14 @@ function displayNews(mainDiv, article, count){
 
     // https://leagueoflegends.fandom.com/wiki/Jax
     var link = document.createElement("a");
-    link.href = article.url;
+    link.href = "https://leagueoflegends.fandom.com/wiki/Jax";
     link.id = "link"
     link.target = "_blank";
 
     // get image from folder
     var img = document.createElement("img");
     img.className = "card-img-bottom";
-    img.src = article.urlToImage;
+    img.src = "test";
     img.alt = "Card image";
     img.style.width = "100%";
     img.style.height =  "50%";
@@ -48,12 +49,12 @@ function displayNews(mainDiv, article, count){
     // champion name
     var title = document.createElement("h4");
     title.className = "card-title";
-    title.innerHTML = article.title;
+    title.innerHTML = id;
 
     // not sure
     var discription = document.createElement("p");
     discription.className = "card-text";
-    discription.innerHTML = article.description;
+    discription.innerHTML = d[id];
 
     mainDiv.appendChild(cardDiv);
     cardDiv.appendChild(card);
