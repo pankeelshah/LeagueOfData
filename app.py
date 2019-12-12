@@ -38,6 +38,10 @@ def news():
 def leaderboard():
     return render_template("leaderboard.html")
 
+@app.route('/rotation')
+def rotation():
+    return render_template("rotation.html")
+
 @app.route('/proxy/<region>/<summoner_name>')
 def proxy(region, summoner_name):
     #First request to get id
@@ -63,6 +67,14 @@ def proxynews(type):
 @app.route('/proxy/challenger')
 def proxychallenger():
     url = 'https://na1.api.riotgames.com/lol/league/v4/challengerleagues/by-queue/RANKED_SOLO_5x5?api_key=' + app.config["SECRET_KEY"]
+    result = requests.get(url)
+    resp = Response(result.text)
+    resp.headers['Content-Type'] = 'application/json'
+    return resp
+
+@app.route('/proxy/rotation')
+def proxyrotation():
+    url = 'https://na1.api.riotgames.com/lol/platform/v3/champion-rotations?api_key=' + app.config["SECRET_KEY"]
     result = requests.get(url)
     resp = Response(result.text)
     resp.headers['Content-Type'] = 'application/json'

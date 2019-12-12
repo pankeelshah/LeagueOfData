@@ -9,6 +9,11 @@ async function getPlayerStats(){
         return resp.json();
     })
 
+    if(name == ""){
+      alert("Please enter a summoner name.");
+      return;
+    }
+    
     jr.then( 
         function(data){
           if (data.length == 0){

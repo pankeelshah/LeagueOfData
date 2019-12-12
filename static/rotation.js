@@ -1,6 +1,6 @@
-async function getNews(){
+async function getRotation(){
     // console.log("test");
-    var url = 'proxy/news/league-of-legends';
+    var url = 'proxy/rotation';
     let promise = fetch(encodeURI(url));
     let jr = promise.then(function(resp){
         return resp.json();
@@ -8,14 +8,7 @@ async function getNews(){
 
     jr.then( 
         function(data){
-            var articles = data.articles;
-            var aLen = articles.length;
-            var mainDiv = document.querySelector(".cardContainer");
-            count = 1;
-            for(var i = 0; i < aLen; i++){
-                displayNews(mainDiv, articles[i], count);
-                count++;
-            }
+            console.log(data);
         }
     )
 }
@@ -62,30 +55,4 @@ function displayNews(mainDiv, article, count){
     link.appendChild(cardBody);
     cardBody.appendChild(title);
     cardBody.appendChild(discription);
-}
-
-function test(){
-    var searchText = document.querySelector("#search").value;
-    let divs = document.getElementsByClassName("cardDiv");
-    // console.log(searchText);
-    if(searchText != ""){
-        
-        // console.log(divs);
-        for (let x = 0; x < divs.length; x++) {
-            var innerText = divs[x].innerText;
-            let div = divs[x];
-            if(innerText.toLowerCase().includes(searchText.toLowerCase())){
-                div.style.display = 'block';
-            }
-            else{
-                div.style.display = 'none';
-            }
-        }
-    }
-    else{
-        for (let x = 0; x < divs.length; x++) {
-            let div = divs[x];
-            div.style.display = 'block';
-        }
-    }
 }
