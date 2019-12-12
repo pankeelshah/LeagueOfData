@@ -6,7 +6,8 @@
 1. List of Technologies/API's Used
    * BootStrap
    * Flask
-   * etc
+   * Riot Games API
+   * Google News API
 1. Detailed Description of the project (No more than 500 words)
 1. List of Controllers and their short description (No more than 50 words for each controller)
 1. List of Views and their short description (No more than 50 words for each view)
@@ -15,3 +16,4 @@
     * https://getbootstrap.com/
     * https://www.w3schools.com/
     * https://developer.riotgames.com/
+    * https://newsapi.org/s/google-news-api
