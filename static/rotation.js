@@ -5,10 +5,13 @@ async function getRotation(){
     let jr = promise.then(function(resp){
         return resp.json();
     })
-
     jr.then( 
         function(data){
-            console.log(data);
+            var dataLength = data.freeChampionIds.length;
+            var mainDiv = document.querySelector(".cardContainer");
+            for(var i = 0; i < aLen; i++){
+                displayNews(mainDiv, data.freeChampionIds[i], i + 1);
+            }
         }
     )
 }
@@ -25,11 +28,13 @@ function displayNews(mainDiv, article, count){
     card.style.width = "400px";
     card.style.height = "400px";
 
+    // https://leagueoflegends.fandom.com/wiki/Jax
     var link = document.createElement("a");
     link.href = article.url;
     link.id = "link"
     link.target = "_blank";
 
+    // get image from folder
     var img = document.createElement("img");
     img.className = "card-img-bottom";
     img.src = article.urlToImage;
@@ -40,10 +45,12 @@ function displayNews(mainDiv, article, count){
     var cardBody = document.createElement("div");
     cardBody.className = "card-body";
 
+    // champion name
     var title = document.createElement("h4");
     title.className = "card-title";
     title.innerHTML = article.title;
 
+    // not sure
     var discription = document.createElement("p");
     discription.className = "card-text";
     discription.innerHTML = article.description;

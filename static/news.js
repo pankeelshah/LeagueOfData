@@ -11,10 +11,8 @@ async function getNews(){
             var articles = data.articles;
             var aLen = articles.length;
             var mainDiv = document.querySelector(".cardContainer");
-            count = 1;
             for(var i = 0; i < aLen; i++){
-                displayNews(mainDiv, articles[i], count);
-                count++;
+                displayNews(mainDiv, articles[i], i + 1);
             }
         }
     )
