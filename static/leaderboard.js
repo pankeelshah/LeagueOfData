@@ -8,7 +8,7 @@ async function getLeaderboard(){
 
     jr.then( 
         function(data){
-            createTableStats(data);
+            createLeaderboard(data);
         }
     ).catch(
         function(data){
@@ -17,7 +17,7 @@ async function getLeaderboard(){
     )
 }
 
-function createTableStats(data){
+function createLeaderboard(data){
   
     var leagueDataTable = document.querySelector("#leagueDataTable");
 
@@ -27,8 +27,6 @@ function createTableStats(data){
     var players = data.entries;
     players.sort((a, b) => (a.leaguePoints < b.leaguePoints) ? 1 : -1);
     var dataLength = players.length;
-    console.log(players);
-
 
     // initalize thead and tbody
     thead = document.createElement("thead");
