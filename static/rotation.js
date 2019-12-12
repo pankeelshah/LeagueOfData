@@ -20,7 +20,8 @@ async function getRotation(){
 function displayChampions(mainDiv, id, count){
 
     var champion_name = d[id];
-    var img_link = "/static/champion/splash/" + champion_name + "_0.jpg";
+    var img_link = "http://ddragon.leagueoflegends.com/cdn/img/" + "champion/splash/" + champion_name + "_0.jpg";
+    //var img_link = "http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Aatrox_0.jpg";
     console.log(img_link);
 
     // var wrapper = document.querySelector("#wrapper");
