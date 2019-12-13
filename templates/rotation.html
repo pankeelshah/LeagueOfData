@@ -1,10 +1,12 @@
 {% extends "base.html" %}
-{% block onload %}onload = "getRotation()"{% endblock %}
+{% block body_attribs %} onload = "getRotation()"{% endblock body_attribs %}
+
 {% block rotation %} class="active"  {% endblock %}
-{% block head %}
+{% block styles %}
+{{super()}}
 <link rel="stylesheet" href="/static/rotation.css">
-<script src="/static/rotation.css"></script>
-{% endblock %}
+<script src="/static/rotation.js"></script>
+{% endblock styles%}
 
 {% block content %}
 <div class="cardContainer" id="wrapper"></div>

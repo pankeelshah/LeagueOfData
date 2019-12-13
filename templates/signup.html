@@ -1,25 +1,26 @@
 {% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
 
-{% block head %}
+{% block styles %}
+{{super()}}
 <link rel="stylesheet" href="/static/signup.css">
 <script src="/static/signup.js"></script>
-{% endblock %}
+{% endblock styles%}
 
 {% block content %}
-
-<!-- <div style="width:800px; height:800px; vertical-align:auto ;background-color:white; margin:0 auto;">
-        centered content
-</div> -->
-<form class="form-signin" >
+<form action="/signup" class="form" method="post" role="form">
+	{{ form.csrf_token() }}
 	<div id="optionSelect">
 		<div>
-		    <h1 class="h3 mb-3 font-weight-normal">Create an Account</h1>
-				<input type="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus=""> <br>
-				<input id="inputEmail" class="form-control" placeholder="Summoner Name" required="" autofocus=""> <br>
-                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required=""> <br>
-                <input type="password" id="reenterpassword" class="form-control" placeholder="Confirm Password" required=""> <br>
-			<button class="btn btn-lg btn-primary btn-block" type="submit">Sign Up</button> <br>
-		</div>			
+			<h1 class="h3 mb-3 font-weight-normal">Sign In</h1>
+			<p>{{message}}</p>
+			{{ wtf.form_field(form.email_addr, class='form-control', placeholder='Enter your Email') }}
+			{{ wtf.form_field(form.summoner, class='form-control', placeholder='Enter your summoner') }}
+			{{ wtf.form_field(form.password, class='form-control', placeholder='Enter Your Password', minlength=5) }}
+			{{ wtf.form_field(form.confirm, class='form-control', placeholder='Re-Enter Your Password', minlength=5) }}
+			<button type=submit class='btn btn-primary btn-block'>Sign up</button> <br>
+		</div>
+					
 	</div>
 </form>
 {% endblock %}
