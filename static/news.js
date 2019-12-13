@@ -27,8 +27,8 @@ function displayNews(mainDiv, article, count){
     var card = document.createElement("div");
     var br = document.createElement("br");
     card.className = "Card";
-    card.style.width = "400px";
-    card.style.height = "400px";
+    card.style.width = "50%";
+    card.style.height = "20%";
 
     var link = document.createElement("a");
     link.href = article.url;

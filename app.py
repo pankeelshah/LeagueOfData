@@ -39,6 +39,7 @@ class User(db.Model):
 
 db.create_all()
 auth = False
+summoner_name = ""
 
 @app.route('/')
 def default():
@@ -52,6 +53,7 @@ def index():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     global auth
+    global summoner_name
     form = LoginForm(request.form)
 
     if not form.validate_on_submit():
@@ -62,6 +64,7 @@ def login():
             return render_template('login.html', form=form, message="Incorrect Username or Password")
         elif user.password == form.password.data:
             auth = True
+            summoner_name = user.username
             return render_template('index.html', form=form, loggedin=auth)
         else:
             return render_template('login.html', form=form, message="Incorrect Password", loggedin=auth)
@@ -69,7 +72,9 @@ def login():
 @app.route('/logout')
 def logout():
     global auth
+    global summoner_name
     auth = False
+    summoner_name = ""
     return render_template("index.html", loggedin=auth)
 
 @app.route('/signup', methods=['GET', 'POST'])
@@ -84,14 +89,28 @@ def signup():
         userSummoner = User.query.filter_by(username=form.summoner.data).first()
 
         if userEmail is not None:
-            return render_template('signup.html', form=form, message="Email already Exists", loggedin=auth)
+            return render_template('signup.html', form=form, message="Email already exists.", loggedin=auth)
         
         if userSummoner is not None:
-            return render_template('signup.html', form=form, message="Summoner already Exists", loggedin=auth)
+            return render_template('signup.html', form=form, message="Summoner already exists.", loggedin=auth)
+
+        if not summonerExists(form.summoner.data):
+            return render_template('signup.html', form=form, message="Summoner Name does not exist.", loggedin=auth)
+
         user = User(form.summoner.data, form.email_addr.data, form.password.data)
         db.session.add(user)
         db.session.commit()
         return redirect(url_for('login'))
+
+def summonerExists(summoner_name):
+    region = "na1"
+    result = requests.get('https://' + region + '.api.riotgames.com/lol/summoner/v4/summoners/by-name/' + summoner_name + '?api_key=' + app.config["SECRET_KEY"])
+    json_data = result.json()
+    try:
+        if (json_data["status"]["message"]) == "Data not found - summoner not found":
+            return False
+    except:
+        return True
 
 @app.route('/news')
 def news():
@@ -108,19 +127,32 @@ def rotation():
     global auth
     return render_template("rotation.html", loggedin=auth)
 
+@app.route('/champions')
+def champions():
+    global auth
+    return render_template("champions.html", loggedin=auth)
+
 @app.route('/proxy/<region>/<summoner_name>')
 def proxy(region, summoner_name):
     #First request to get id
     result = requests.get('https://' + region + '.api.riotgames.com/lol/summoner/v4/summoners/by-name/' + summoner_name + '?api_key=' + app.config["SECRET_KEY"])
     json_data = result.json()
-    account_id = json_data['id']
 
-    #Second request to get account data
-    url = 'https://na1.api.riotgames.com/lol/league/v4/entries/by-summoner/' + account_id + '?api_key=' + app.config["SECRET_KEY"]
-    result = requests.get(url)
-    resp = Response(result.text)
-    resp.headers['Content-Type'] = 'application/json'
-    return resp
+    try:
+        account_id = json_data['id']
+
+        #Second request to get account data
+        url = 'https://na1.api.riotgames.com/lol/league/v4/entries/by-summoner/' + account_id + '?api_key=' + app.config["SECRET_KEY"]
+        result = requests.get(url)
+        resp = Response(result.text)
+        resp.headers['Content-Type'] = 'application/json'
+        return resp
+    
+    except:
+        resp = Response()
+        resp.headers['Content-Type'] = 'application/json'
+        return resp
+
 
 @app.route('/proxy/news/<type>')
 def proxynews(type):
@@ -141,6 +173,21 @@ def proxychallenger():
 @app.route('/proxy/rotation')
 def proxyrotation():
     url = 'https://na1.api.riotgames.com/lol/platform/v3/champion-rotations?api_key=' + app.config["SECRET_KEY"]
+    result = requests.get(url)
+    resp = Response(result.text)
+    resp.headers['Content-Type'] = 'application/json'
+    return resp
+
+@app.route('/proxy/champions')
+def proxychampions():
+    region = "na1"
+    #First request to get id
+    result = requests.get('https://' + region + '.api.riotgames.com/lol/summoner/v4/summoners/by-name/' + summoner_name + '?api_key=' + app.config["SECRET_KEY"])
+    json_data = result.json()
+    account_id = json_data['id']
+
+    #Second request to get account data
+    url = 'https://na1.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/' + account_id + '?api_key=' + app.config["SECRET_KEY"]
     result = requests.get(url)
     resp = Response(result.text)
     resp.headers['Content-Type'] = 'application/json'

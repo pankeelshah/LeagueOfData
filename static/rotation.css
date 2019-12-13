@@ -34,6 +34,7 @@
     -ms-flex:1 1 auto;
     flex:1 1 auto;
     padding:1.25rem;
+    /* background-color: white; */
 }
 .card-title{
     margin-bottom:.75rem;
@@ -80,7 +81,7 @@
 
 .wrapper {
     min-height: 100%;
-    background-color: lightgray;
+    background-color: 252423;
     margin-bottom: -50px;
   }
   

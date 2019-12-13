@@ -8,7 +8,7 @@ async function getPlayerStats(){
     let jr = promise.then(function(resp){
         return resp.json();
     })
-
+    
     if(name == ""){
       alert("Please enter a summoner name.");
       return;
@@ -16,8 +16,9 @@ async function getPlayerStats(){
     
     jr.then( 
         function(data){
+          console.log(data);
           if (data.length == 0){
-            alert("Summoner does not exist.");
+            alert("Summoner has no data.");
           }
           else {
             createTableStats(data);
@@ -25,7 +26,7 @@ async function getPlayerStats(){
         }
     ).catch(
         function(data){
-            console.log(data);
+            alert("Summoner Name does not exist");
         }
     )
 }
@@ -42,8 +43,6 @@ function createTableStats(data){
     // console.log("Player does not exist, or no data available.")
     alert("Player does not exist, or no data available.");
   }else{
-
-    console.log(data);
     var dataLength = data.length;
     for(var i = 0; i < dataLength; i++){
 

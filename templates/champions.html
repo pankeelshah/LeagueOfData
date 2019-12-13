@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block body_attribs %} onload = "getChampions()"{% endblock body_attribs %}
+{% block champions %} class="active"  {% endblock %}
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="/static/champions.css">
+<script src="/static/champions.js"></script>
+{% endblock styles%}
+
+{% block content %}
+<p>test</p>
+{% endblock %}

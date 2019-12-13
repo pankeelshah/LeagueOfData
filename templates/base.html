@@ -30,6 +30,9 @@
                 <li {% block leaderboard %} {% endblock %}><a href="/leaderboard">Leaderboard</a></li>
                 <li {% block rotation %} {% endblock %}><a href="/rotation">Free Rotation</a></li>
                 <li {% block news %} {% endblock %}><a href="/news">News</a></li>
+                {% if loggedin %}
+                    <li {% block champions %} {% endblock %}><a href="/champions">Champions</a></li>
+                {% endif %}
             </ul>
             <ul class="nav navbar-nav" id="test">
                 {% if loggedin %}
