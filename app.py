@@ -23,7 +23,6 @@ app.config["SECRET_KEY"] = 'RGAPI-61561ff9-ab11-489e-8ae2-492d6786185d'
 
 Bootstrap(app)
 
-
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True)
@@ -93,6 +92,7 @@ def signup():
         db.session.add(user)
         db.session.commit()
         return redirect(url_for('login'))
+
 @app.route('/news')
 def news():
     global auth
