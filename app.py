@@ -8,11 +8,38 @@ import wtforms
 from wtforms.validators import Regexp
 import re
 import json
+from flask_bootstrap import Bootstrap
+from models import LoginForm, SignupForm
+from flask_sqlalchemy import SQLAlchemy
 
 csrf = CSRFProtect()
 app = Flask(__name__)
-app.config["SECRET_KEY"] = 'RGAPI-61561ff9-ab11-489e-8ae2-492d6786185d'  
-csrf.init_app(app)
+
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///example.db"
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+db = SQLAlchemy(app)
+app.config["SECRET_KEY"] = 'RGAPI-61561ff9-ab11-489e-8ae2-492d6786185d'
+# csrf.init_app(app)
+
+Bootstrap(app)
+
+
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80), unique=True)
+    email = db.Column(db.String(120), unique=True)
+    password = db.Column(db.String(120), unique=False)
+
+    def __init__(self, username, email, password):
+        self.username = username
+        self.email = email
+        self.password = password
+
+    def __repr__(self):
+        return '<User %r>' % self.username
+
+db.create_all()
+auth = False
 
 @app.route('/')
 def default():
@@ -20,27 +47,66 @@ def default():
 
 @app.route('/index')
 def index():
-    return render_template("index.html")
+    global auth
+    return render_template("index.html", loggedin=auth)
 
-@app.route('/login')
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-    return render_template("login.html")
+    global auth
+    form = LoginForm(request.form)
 
-@app.route('/signup')
+    if not form.validate_on_submit():
+        return render_template('login.html', form=form)
+    if request.method == 'POST':
+        user = User.query.filter_by(email=form.email_addr.data).first()
+        if user is None:
+            return render_template('login.html', form=form, message="Incorrect Username or Password")
+        elif user.password == form.password.data:
+            auth = True
+            return render_template('index.html', form=form, loggedin=auth)
+        else:
+            return render_template('login.html', form=form, message="Incorrect Password", loggedin=auth)
+
+@app.route('/logout')
+def logout():
+    global auth
+    auth = False
+    return render_template("index.html", loggedin=auth)
+
+@app.route('/signup', methods=['GET', 'POST'])
 def signup():
-    return render_template("signup.html")
+    global auth
+    form = SignupForm(request.form)
+    if not form.validate_on_submit():
+        return render_template('signup.html', form=form)
+    if request.method == 'POST':
 
+        userEmail = User.query.filter_by(email=form.email_addr.data).first()
+        userSummoner = User.query.filter_by(username=form.summoner.data).first()
+
+        if userEmail is not None:
+            return render_template('signup.html', form=form, message="Email already Exists", loggedin=auth)
+        
+        if userSummoner is not None:
+            return render_template('signup.html', form=form, message="Summoner already Exists", loggedin=auth)
+        user = User(form.summoner.data, form.email_addr.data, form.password.data)
+        db.session.add(user)
+        db.session.commit()
+        return redirect(url_for('login'))
 @app.route('/news')
 def news():
-    return render_template("news.html")
+    global auth
+    return render_template("news.html", loggedin=auth)
 
 @app.route('/leaderboard')
 def leaderboard():
-    return render_template("leaderboard.html")
+    global auth
+    return render_template("leaderboard.html", loggedin=auth)
 
 @app.route('/rotation')
 def rotation():
-    return render_template("rotation.html")
+    global auth
+    return render_template("rotation.html", loggedin=auth)
 
 @app.route('/proxy/<region>/<summoner_name>')
 def proxy(region, summoner_name):

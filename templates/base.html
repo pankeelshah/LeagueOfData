@@ -1,60 +1,64 @@
-<html>
-    <head>
+{% extends "bootstrap/base.html" %}
+
+{% block styles %}
+        {{super()}}
         <link rel="stylesheet" href="/static/index.css">
         <script src="/static/index.js"></script>
         <script src="/static/news.js"></script>
         <script src="/static/leaderboard.js"></script>
         <script src="/static/rotation.js"></script>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+        <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"> -->
         <!-- <link rel="stylesheet" type="text/css" href="https://s.lolstatic.com/awesomefonts/1.0.0/lol-fonts.css">
         <link rel="stylesheet" href="https://static.developer.riotgames.com/css/new.1.6.6.css"> -->
         <title>LeagueData</title>
         <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.png') }}">
-        {% block head %}
-        
-        {% endblock %}
-    </head>
-    <body {% block onload %}{% endblock %}>
-        <div class="wrapper">
-            {% block navbar %}
+{% endblock styles %}
 
-            <nav class="navbar navbar-inverse">
-                <div class="container-fluid">
-                    <div class="navbar-header">
-                    <div class="navbar-logo">
-                        <a href="/"><img src="https://static.developer.riotgames.com/img/logo.png"></a>
-                    </div>
-                    </div>
-                    <ul class="nav navbar-nav">
-                        <li {% block home %} {% endblock %}><a href="/index">Home</a></li>
-                        <li {% block leaderboard %} {% endblock %}><a href="/leaderboard">Leaderboard</a></li>
-                        <li {% block rotation %} {% endblock %}><a href="/rotation">Free Rotation</a></li>
-                        <li {% block news %} {% endblock %}><a href="/news">News</a></li>
-                    </ul>
-                    <ul class="nav navbar-nav" id="test">
-                        <li {% block login %} {% endblock %}><a href="/login">Login</a></li>
-                    </ul>
-                </div>
-            </nav>
-           
-            {% endblock %}
+{% block body -%}
+<div class="wrapper">
+    {% block navbar %}
 
-            <div id="inputSection">
-                
-                {% block content %}
-                default content
-                {% endblock %}
-
-                <div class="push"></div>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+            <div class="navbar-logo">
+                <a href="/"><img src="https://static.developer.riotgames.com/img/logo.png"></a>
             </div>
+            </div>
+            <ul class="nav navbar-nav">
+                <li {% block home %} {% endblock %}><a href="/index">Home</a></li>
+                <li {% block leaderboard %} {% endblock %}><a href="/leaderboard">Leaderboard</a></li>
+                <li {% block rotation %} {% endblock %}><a href="/rotation">Free Rotation</a></li>
+                <li {% block news %} {% endblock %}><a href="/news">News</a></li>
+            </ul>
+            <ul class="nav navbar-nav" id="test">
+                {% if loggedin %}
+                    <li {% block logout %} {% endblock %}><a href="/logout">Logout</a></li>
+                {% else %}
+                    <li {% block login %} {% endblock %}><a href="/login">Login</a></li>
+                {% endif %}
+            </ul>
         </div>
-        {% block footer %}
-        <footer class="footer">
-            LeagueData isn't endorsed by Riot Games and doesn't reflect the views or opinions of 
-            Riot Games or anyone officially involved in producing or managing League of Legends. <br>
-            League of Legends and Riot Games are trademarks or registered trademarks of Riot Games, 
-            Inc. League of Legends © Riot Games, Inc.
-        </footer>  
+    </nav>
+   
+    {% endblock %}
+
+    <div id="inputSection">
+        
+        {% block content %}
+        default content
         {% endblock %}
-    </body>
-</html>
+
+        <div class="push"></div>
+    </div>
+</div>
+{% block footer %}
+<footer class="footer">
+    LeagueData isn't endorsed by Riot Games and doesn't reflect the views or opinions of 
+    Riot Games or anyone officially involved in producing or managing League of Legends. <br>
+    League of Legends and Riot Games are trademarks or registered trademarks of Riot Games, 
+    Inc. League of Legends © Riot Games, Inc.
+</footer>  
+{% endblock %}
+{%- endblock body %}
+
