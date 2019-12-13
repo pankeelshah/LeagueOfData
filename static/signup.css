@@ -10,3 +10,8 @@
     background-color:white; 
     margin:0 auto;
 }
+
+#signupBtn{
+    background-color: #d1363a;
+    border-color: #d1363a;
+}

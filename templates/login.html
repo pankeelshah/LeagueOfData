@@ -17,8 +17,10 @@
 			<p>{{message}}</p>
 			{{ wtf.form_field(form.email_addr, class='form-control', placeholder='Enter your Email') }}
 			{{ wtf.form_field(form.password, class='form-control', placeholder='Enter Your Password', minlength=5) }}
-			<button type=submit class='btn btn-primary btn-block'>Log In</button> <br>
-			<h1 class="h3 mb-3 font-weight-normal"><a href="/signup">Create an Account?</a> </h1>
+			<button id="loginBtn" type=submit class='btn btn-primary btn-block'>Log In</button> <br>
+			<h1  class="h3 mb-3 font-weight-normal">
+				<a id="text" href="/signup">Create an Account?</a>
+			</h1>
 		</div>
 					
 	</div>

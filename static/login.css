@@ -10,3 +10,12 @@
     background-color:white; 
     margin:0 auto;
 }
+
+#loginBtn{
+    background-color: #d1363a;
+    border-color: #d1363a;
+}
+
+#text{
+    color: #d1363a;
+}
