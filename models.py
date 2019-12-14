@@ -15,3 +15,9 @@ class SignupForm(FlaskForm):
         password = PasswordField('', validators=[DataRequired(), EqualTo('confirm', message='Passwords must match')])
         confirm = PasswordField('')
         submit = SubmitField('Submit')
+
+
+class ChampionForm(FlaskForm):
+        add_champion = TextField('', validators=[InputRequired()])
+        
+        submit = SubmitField('Submit')

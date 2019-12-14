@@ -9,33 +9,69 @@ from wtforms.validators import Regexp
 import re
 import json
 from flask_bootstrap import Bootstrap
-from models import LoginForm, SignupForm
+from models import LoginForm, SignupForm, ChampionForm
 from flask_sqlalchemy import SQLAlchemy
 
 csrf = CSRFProtect()
 app = Flask(__name__)
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///example.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///League.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 app.config["SECRET_KEY"] = 'RGAPI-61561ff9-ab11-489e-8ae2-492d6786185d'
 # csrf.init_app(app)
-
+# engine
 Bootstrap(app)
+
+
+# favs = db.Table('favs',
+#     db.Column('champion_id', db.Integer, db.ForeignKey('champion.champion_id')),
+#     db.Column('user_id', db.Integer, db.ForeignKey("user.user_id"))
+# )
+
+# class Favs(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     db.Column('champion_id', db.Integer, db.ForeignKey('champion.champion_id'))
+#     db.Column('user_id', db.Integer, db.ForeignKey("user.user_id"))
+
+
+
+
+# class Champion(db.Model):
+#     champion_id = db.Column(db.Integer, primary_key=True)
+#     champion_name = db.Column(db.String(80))
+#     # summoner_name = db.Column(db.String(80))
+#     favorites = db.relationship('User', secondary='favs', backref=db.backref('following', lazy='dynamic'))
+
+# class User(db.Model):
+#     user_id = db.Column(db.Integer, primary_key=True)
+#     summoner = db.Column(db.String(80), unique=True)
+#     email = db.Column(db.String(120), unique=True)
+#     password = db.Column(db.String(120))
+
+
+#     def __init__(self, summoner, email, password):
+#         self.summoner = summoner
+#         self.email = email
+#         self.password = password
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True)
+    summoner_name = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(120), unique=True)
-    password = db.Column(db.String(120), unique=False)
+    password = db.Column(db.String(120))
+    Favorites = db.relationship('Champion', backref='user', lazy=True)
 
     def __init__(self, username, email, password):
-        self.username = username
+        self.summoner_name = username
         self.email = email
         self.password = password
 
-    def __repr__(self):
-        return '<User %r>' % self.username
+class Champion(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    champion_name = db.Column(db.String(120), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'),
+        nullable=False)
 
 db.create_all()
 auth = False
@@ -59,12 +95,18 @@ def login():
     if not form.validate_on_submit():
         return render_template('login.html', form=form)
     if request.method == 'POST':
+        # Storing the Logged in user
         user = User.query.filter_by(email=form.email_addr.data).first()
+
+        # If no user is found, then they might have entered the wrong credentials
+        # If the user entered the correct username, but the wrong password, error is shown
         if user is None:
             return render_template('login.html', form=form, message="Incorrect Username or Password")
-        elif user.password == form.password.data:
+        elif user.password == form.password.data:   
+            # Confirming the user logged in
             auth = True
-            summoner_name = user.username
+            summoner_name = user.summoner_name
+            print(summoner_name)
             return render_template('index.html', form=form, loggedin=auth)
         else:
             return render_template('login.html', form=form, message="Incorrect Password", loggedin=auth)
@@ -86,7 +128,7 @@ def signup():
     if request.method == 'POST':
 
         userEmail = User.query.filter_by(email=form.email_addr.data).first()
-        userSummoner = User.query.filter_by(username=form.summoner.data).first()
+        userSummoner = User.query.filter_by(summoner_name=form.summoner.data).first()
 
         if userEmail is not None:
             return render_template('signup.html', form=form, message="Email already exists.", loggedin=auth)
@@ -127,10 +169,32 @@ def rotation():
     global auth
     return render_template("rotation.html", loggedin=auth)
 
-@app.route('/champions')
+@app.route('/champions', methods=['GET', 'POST'])
 def champions():
     global auth
-    return render_template("champions.html", loggedin=auth)
+    global summoner_name
+
+    # Getting Logged In user.
+    loggedInuser = User.query.filter_by(summoner_name=summoner_name).first()
+
+    form = ChampionForm(request.form)
+    if not form.validate_on_submit():
+        return render_template('champions.html', form=form)
+    if request.method == 'POST':
+        championExists = False
+        for champion in loggedInuser.Favorites:
+            if form.add_champion.data == champion.champion_name:
+                championExists = True
+        if not championExists:
+
+            champion = Champion(champion_name=form.add_champion.data, user_id=loggedInuser.id)
+            db.session.add(champion)
+            db.session.commit()
+        return render_template('index.html', form=form, loggedin=auth)
+
+    
+
+    # return render_template("champions.html", loggedin=auth)
 
 @app.route('/proxy/<region>/<summoner_name>')
 def proxy(region, summoner_name):

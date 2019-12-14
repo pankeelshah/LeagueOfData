@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
 {% block body_attribs %} onload = "getChampions()"{% endblock body_attribs %}
 {% block champions %} class="active"  {% endblock %}
 {% block styles %}
@@ -8,5 +9,16 @@
 {% endblock styles%}
 
 {% block content %}
-<p>test</p>
+<form action="/champions" class="form" method="post" role="form">
+	{{ form.csrf_token() }}
+	<div id="optionSelect">
+		<div>
+			<h1 class="h3 mb-3 font-weight-normal">Create An Account</h1>
+			{{ wtf.form_field(form.add_champion, class='form-control', placeholder='Champion Name') }}
+
+			<button id="addChampBtn" type=submit class='btn btn-primary btn-block'>Add Champion</button> <br>
+		</div>
+					
+	</div>
+</form>
 {% endblock %}
