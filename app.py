@@ -179,7 +179,7 @@ def champions():
 
     form = ChampionForm(request.form)
     if not form.validate_on_submit():
-        return render_template('champions.html', form=form)
+        return render_template('champions.html', form=form, loggedin= auth)
     if request.method == 'POST':
         championExists = False
         for champion in loggedInuser.Favorites:
