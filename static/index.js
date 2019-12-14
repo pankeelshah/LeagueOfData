@@ -100,3 +100,7 @@ window.onload = function(){
   }
 };
   
+
+function teste(){
+  console.log("test");
+}

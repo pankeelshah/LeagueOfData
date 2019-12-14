@@ -160,31 +160,28 @@ def champions():
             if champion_name == champion.champion_name:
                 championInDatabase = champion
                 championExistsInDataBase = True
-        
+        print(form.add_btn)
+        print(form.remove_btn)
         if form.add_btn.data:
-            if championExistsInDataBase:
-                return render_template('champions.html', form=form, loggedin= auth, message = "Champion already added.")
             if champion_name not in champion_ls:
                 return render_template('champions.html', form=form, loggedin= auth, message = "Champion does not exists.")
-
+            if championExistsInDataBase:
+                return render_template('champions.html', form=form, loggedin= auth, message = "Champion already added.")
+            
             champion = Champion(champion_name=champion_name, user_id=loggedInuser.id)
             db.session.add(champion)
             db.session.commit()
             return render_template('champions.html', form=form, loggedin= auth, message="Champion has been Added")
 
         if form.remove_btn.data:
-            if not championExistsInDataBase:
-                return render_template('champions.html', form=form, loggedin= auth, message = "Champion is not in favorites.")
             if champion_name not in champion_ls:
                 return render_template('champions.html', form=form, loggedin= auth, message = "Champion does not exists.")
+            if not championExistsInDataBase:
+                return render_template('champions.html', form=form, loggedin= auth, message = "Champion is not in favorites.")
+            
             db.session.delete(championInDatabase)
             db.session.commit()
             return render_template('champions.html', form=form, loggedin= auth, message="Champion has been Removed")
-
-
-    
-
-    # return render_template("champions.html", loggedin=auth)
 
 @app.route('/proxy/<region>/<summoner_name>')
 def proxy(region, summoner_name):
