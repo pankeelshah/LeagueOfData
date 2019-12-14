@@ -183,17 +183,22 @@ def champions():
     if not form.validate_on_submit():
         return render_template('champions.html', form=form, loggedin= auth)
     if request.method == 'POST':
+        
+        champion_name = form.add_champion.data.capitalize()
+        print(champion_name)
+        
         championExistsInDataBase = False
         for champion in loggedInuser.Favorites:
-            if form.add_champion.data == champion.champion_name:
+            if champion_name == champion.champion_name:
                 championExistsInDataBase = True
-        
+        print(championExistsInDataBase)
         if championExistsInDataBase:
             return render_template('champions.html', form=form, loggedin= auth, message = "Champion already added.")
-        if form.add_champion.data not in champion_ls:
+        if champion_name not in champion_ls:
             return render_template('champions.html', form=form, loggedin= auth, message = "Champion does not exists.")
 
-        champion = Champion(champion_name=form.add_champion.data, user_id=loggedInuser.id)
+        
+        champion = Champion(champion_name=champion_name, user_id=loggedInuser.id)
         db.session.add(champion)
         db.session.commit()
 
