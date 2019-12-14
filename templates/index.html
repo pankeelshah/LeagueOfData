@@ -1,5 +1,10 @@
 {% extends "base.html" %}
 {% block home %} class="active"  {% endblock %}
+{% block styles %}
+        {{super()}}
+        <link rel="stylesheet" href="/static/index.css">
+        <script src="/static/index.js"></script>
+{% endblock styles %}
 {% block content %}
 
 <div id="inputSection">
