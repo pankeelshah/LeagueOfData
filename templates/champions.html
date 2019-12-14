@@ -13,7 +13,8 @@
 	{{ form.csrf_token() }}
 	<div id="optionSelect">
 		<div>
-			<h1 class="h3 mb-3 font-weight-normal">Create An Account</h1>
+			<h1 class="h3 mb-3 font-weight-normal">Add You Favorite Champions</h1>
+			<p>{{message}}</p>
 			{{ wtf.form_field(form.add_champion, class='form-control', placeholder='Champion Name') }}
 
 			<button id="addChampBtn" type=submit class='btn btn-primary btn-block'>Add Champion</button> <br>

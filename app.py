@@ -177,20 +177,27 @@ def champions():
     # Getting Logged In user.
     loggedInuser = User.query.filter_by(summoner_name=summoner_name).first()
 
+    champion_ls = ['Qiyana', 'Wukong', 'Jax', 'Kayn', 'Yuumi', 'Shaco', 'Warwick', 'Xayah', 'Sylas', 'Nidalee', 'Zyra', 'Kled', 'Brand', 'Rammus', 'Illaoi', 'Corki', 'Braum', 'Darius', 'Tryndamere', 'MissFortune', 'Yorick', 'Xerath', 'Sivir', 'Riven', 'Orianna', 'Sejuani', 'Gangplank', 'Malphite', 'Poppy', 'Kaisa', 'Jayce', 'Blitzcrank', 'Trundle', 'Karthus', 'Zoe', 'Graves', 'Lucian', 'Nocturne', 'Lux', 'Shyvana', 'Renekton', 'Fiora', 'Jinx', 'Kalista', 'Fizz', 'Kassadin', 'Sona', 'Vladimir', 'Viktor', 'Rakan', 'Kindred', 'Cassiopeia', 'Maokai', 'Ornn', 'Thresh', 'Kayle', 'Hecarim', 'Khazix', 'Olaf', 'Ziggs', 'Syndra', 'DrMundo', 'Karma', 'Annie', 'Akali', 'Leona', 'Yasuo', 'Kennen', 'Rengar', 'Ryze', 'Shen', 'Zac', 'Pantheon', 'Neeko', 'Bard', 'Sion', 'Vayne', 'Nasus', 'Fiddlesticks', 'TwistedFate', 'Chogath', 'Udyr', 'Morgana', 'Ivern', 'Volibear', 'Caitlyn', 'Anivia', 'Gnar', 'Rumble', 'Zilean', 'Azir', 'Diana', 'Skarner', 'Teemo', 'Urgot', 'Amumu', 'Galio', 'Heimerdinger', 'Ashe', 'Velkoz', 'Singed', 'Taliyah', 'Senna', 'Varus', 'Twitch', 'Garen', 'Nunu', 'MasterYi', 'Pyke', 'Elise', 'Alistar', 'Katarina', 'Ekko', 'Mordekaiser', 'KogMaw', 'Camille', 'Aatrox', 'Draven', 'TahmKench', 'Talon', 'XinZhao', 'Swain', 'AurelionSol', 'LeeSin', 'Aphelios', 'Taric', 'Malzahar', 'Lissandra', 'Tristana', 'RekSai', 'Irelia', 'JarvanIV', 'Nami', 'Jhin', 'Soraka', 'Veigar', 'Janna', 'Nautilus', 'Evelynn', 'Gragas', 'Zed', 'Vi', 'Lulu', 'Ahri', 'Quinn', 'Leblanc', 'Ezreal']
+    
     form = ChampionForm(request.form)
     if not form.validate_on_submit():
         return render_template('champions.html', form=form, loggedin= auth)
     if request.method == 'POST':
-        championExists = False
+        championExistsInDataBase = False
         for champion in loggedInuser.Favorites:
             if form.add_champion.data == champion.champion_name:
-                championExists = True
-        if not championExists:
+                championExistsInDataBase = True
+        
+        if championExistsInDataBase:
+            return render_template('champions.html', form=form, loggedin= auth, message = "Champion already added.")
+        if form.add_champion.data not in champion_ls:
+            return render_template('champions.html', form=form, loggedin= auth, message = "Champion does not exists.")
 
-            champion = Champion(champion_name=form.add_champion.data, user_id=loggedInuser.id)
-            db.session.add(champion)
-            db.session.commit()
-        return render_template('index.html', form=form, loggedin=auth)
+        champion = Champion(champion_name=form.add_champion.data, user_id=loggedInuser.id)
+        db.session.add(champion)
+        db.session.commit()
+
+        return render_template('champions.html', form=form, loggedin= auth,)
 
     
 
