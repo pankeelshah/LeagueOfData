@@ -20,40 +20,9 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 app.config["SECRET_KEY"] = 'RGAPI-61561ff9-ab11-489e-8ae2-492d6786185d'
 # csrf.init_app(app)
-# engine
+
 Bootstrap(app)
 
-
-# favs = db.Table('favs',
-#     db.Column('champion_id', db.Integer, db.ForeignKey('champion.champion_id')),
-#     db.Column('user_id', db.Integer, db.ForeignKey("user.user_id"))
-# )
-
-# class Favs(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     db.Column('champion_id', db.Integer, db.ForeignKey('champion.champion_id'))
-#     db.Column('user_id', db.Integer, db.ForeignKey("user.user_id"))
-
-
-
-
-# class Champion(db.Model):
-#     champion_id = db.Column(db.Integer, primary_key=True)
-#     champion_name = db.Column(db.String(80))
-#     # summoner_name = db.Column(db.String(80))
-#     favorites = db.relationship('User', secondary='favs', backref=db.backref('following', lazy='dynamic'))
-
-# class User(db.Model):
-#     user_id = db.Column(db.Integer, primary_key=True)
-#     summoner = db.Column(db.String(80), unique=True)
-#     email = db.Column(db.String(120), unique=True)
-#     password = db.Column(db.String(120))
-
-
-#     def __init__(self, summoner, email, password):
-#         self.summoner = summoner
-#         self.email = email
-#         self.password = password
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -183,26 +152,35 @@ def champions():
     if not form.validate_on_submit():
         return render_template('champions.html', form=form, loggedin= auth)
     if request.method == 'POST':
-        
+
         champion_name = form.add_champion.data.capitalize()
-        print(champion_name)
-        
         championExistsInDataBase = False
+        championInDatabase = None
         for champion in loggedInuser.Favorites:
             if champion_name == champion.champion_name:
+                championInDatabase = champion
                 championExistsInDataBase = True
-        print(championExistsInDataBase)
-        if championExistsInDataBase:
-            return render_template('champions.html', form=form, loggedin= auth, message = "Champion already added.")
-        if champion_name not in champion_ls:
-            return render_template('champions.html', form=form, loggedin= auth, message = "Champion does not exists.")
-
         
-        champion = Champion(champion_name=champion_name, user_id=loggedInuser.id)
-        db.session.add(champion)
-        db.session.commit()
+        if form.add_btn.data:
+            if championExistsInDataBase:
+                return render_template('champions.html', form=form, loggedin= auth, message = "Champion already added.")
+            if champion_name not in champion_ls:
+                return render_template('champions.html', form=form, loggedin= auth, message = "Champion does not exists.")
 
-        return render_template('champions.html', form=form, loggedin= auth,)
+            champion = Champion(champion_name=champion_name, user_id=loggedInuser.id)
+            db.session.add(champion)
+            db.session.commit()
+            return render_template('champions.html', form=form, loggedin= auth, message="Champion has been Added")
+
+        if form.remove_btn.data:
+            if not championExistsInDataBase:
+                return render_template('champions.html', form=form, loggedin= auth, message = "Champion is not in favorites.")
+            if champion_name not in champion_ls:
+                return render_template('champions.html', form=form, loggedin= auth, message = "Champion does not exists.")
+            db.session.delete(championInDatabase)
+            db.session.commit()
+            return render_template('champions.html', form=form, loggedin= auth, message="Champion has been Removed")
+
 
     
 

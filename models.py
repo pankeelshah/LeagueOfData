@@ -19,5 +19,5 @@ class SignupForm(FlaskForm):
 
 class ChampionForm(FlaskForm):
         add_champion = TextField('', validators=[InputRequired()])
-        
-        submit = SubmitField('Submit')
+        add_btn = SubmitField(label='Add')
+        remove_btn = SubmitField(label='Remove')
