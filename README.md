@@ -14,31 +14,31 @@
     test test test test test test test test test
     test test test test test test test test test
 1. List of Controllers and their short description (No more than 50 words for each controller)
-    * / : test
-    * /index
-    * /login
-    * /logout
-    * /signup
-    * /news
-    * /leaderboard
-    * /rotation
-    * /champions
-    * /players
-    * /proxy/&lt;region&gt;/&lt;summoner_name&gt;
-    * /proxy/news/&lt;type&gt;
-    * /proxy/challenger
-    * /proxy/rotation
-    * /proxy/favoritechampions
-    * /proxy/favoriteplayers
+    * / - Default which redirects to /index.
+    * /index - Default home page, which uses JavaScript to search and display results.
+    * /login - Handle's login form validation and checks database for user.
+    * /logout - Log's out user and makes changes in database.
+    * /signup - Handle's signup form validation and adds user to database.
+    * /news - Uses onLoad() function to call JavaScript and display news.
+    * /leaderboard - Uses onLoad() function to call JavaScript and display leaderboard.
+    * /rotation - Uses onLoad() function to call JavaScript and display current free rotation.
+    * /champions - Use's form validation to check for input, make sure that champion exists, and check weather the champion is in the database already. Depending on if user has clicked add or remove, adds or removes the champion from the database.
+    * /players - Use's form validation to check for input, and make sure that the champion is in the database already. Depending on if user has clicked add or remove, adds or removes the player from the database.
+    * /proxy/&lt;region&gt;/&lt;summoner_name&gt; - Makes an API call to Riot's API to get statistics on a specific player. 
+    * /proxy/news/&lt;type&gt; - Makes an API call to Google News API to get the latest League of Legends articles.
+    * /proxy/challenger - Makes an API call to Riot's API to get the top 300 players on the leaderboard.
+    * /proxy/rotation - Makes an API call to Riot's API to get the current week's free champion rotation. 
+    * /proxy/favoritechampions - Gets the current users favorite champions from the database. 
+    * /proxy/favoriteplayers - Gets the current users favorite players from the database. 
 1. List of Views and their short description (No more than 50 words for each view)
     * base.html - Base template which contains header and footer.
-    * champions.html - Only available when a user is logged in. User can add and remove their favorite champions.
+    * champions.html - Only available when a user is logged in. User can add and remove their favorite champions. This will display their favorite champions which can be clicked to visit a website with more information on them.
     * index.html - Default home page where League of Legend players stats can be searched.
     * leaderboard.html - Displays top 300 League of Legends players on the Summoners Rift Ranked 5v5 leaderboard.
     * login.html - Login page for users to log-in to website.
     * news.html - Shows the latest news articles associated with League of Legends.
-    * players.html - Only available when a user is logged in. User can add and remove their favorite players.
-    * rotation.html - Shows the current free rotation of champions that is available for the current week.
+    * players.html - Only available when a user is logged in. User can add and remove their favorite players. This will display their favorite players which can be clicked to visit a website with more information on them.
+    * rotation.html - Shows the current free rotation of champions that is available for the current week. The champions can be clicked to visit a website with more information on them.
     * signup.html - Signup page to create a new account.
 1. List of Tables, their Structure and short description
     * champion - Holds all user's favorite champions along with which user they belong to.
