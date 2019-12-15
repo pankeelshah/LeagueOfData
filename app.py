@@ -295,7 +295,7 @@ def proxyrotation():
 
 @app.route('/proxy/favoritechampions')
 def proxyfavoritechampions():
-    loggedInuser = User.query.filter_by(auth=True).first()
+    loggedInuser = User.query.filter_by(summoner_name=summoner_name).first()
     ls = []
     for champ in loggedInuser.Favorites:
         ls.append(champ.champion_name)
