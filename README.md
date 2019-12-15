@@ -8,7 +8,7 @@
    * Flask
    * Riot Games API
    * Google News API
-1. Detailed Description of the project (No more than 500 words)__
+1. Detailed Description of the project (No more than 500 words) <br />
     test test test test test test test test test
     test test test test test test test test test
     test test test test test test test test test
