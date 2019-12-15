@@ -9,13 +9,35 @@
    * Riot Games API
    * Google News API
 1. Detailed Description of the project (No more than 500 words) <br />
-    test test test test test test test test test
-    test test test test test test test test test
-    test test test test test test test test test
-    test test test test test test test test test
+
+League of Legend's web application created using the Flask framework which allows users to get many different types of League of Legends information, and also store their own information. 
+
+On the Home page, users can search for information on specific League of Legend's players and get statistics on the different game modes that they play, and their tier, rank, wins, losses and win rate in those game modes. 
+
+On the Leaderboard page, users can view the current top of the ranked leaderboard and see the top 300 players on the ladder at the current moment.
+
+On the Free Rotation page, users can view the current free champion rotation. This page shows a list of the champions that are available and free to play for the current week. These champions can be clicked on which will lead to a wiki page with more information on those champions. 
+
+On the News page, users can view cards displaying the latest League of Legends articles. There is also a search bar which allows users to search for specific articles. These articles can be clicked to visit the full link.
+
+On the Login page, users can sign in to their account. If the user does that have an account, they can click the create an account link. On the Create An Account page, users can create a new account. All created users have a unique email and summoner name. Once a user has logged in, two new tabs are available: Champions and Players.
+
+On the Champions page, users can keep track of their favorite champions. They can add or remove champions to update their current favorite champions. This list of favorite champions is saved in the database. 
+
+On the Players page, users can keep track of their favorite players. They can add or remove players to update their current favorite players. This list of favorite players is saved in the database. 
+
+To aid with testing purposes we have provided additional information which may be used to verify website functionality. 
+
+Already Created Accounts(username, password): 
+* admin1@example.com, admin1
+* admin2@example.com, admin2
+
+Feel free to create your own accounts. To create an account you must provide a valid summoner name. You can find a list of summoner names in the Leaderboard tab.
+
+When adding to the champions to your favorite champions list, you must provide real champions. Here is a (list)[https://na.leagueoflegends.com/en/game-info/champions/] containing all 147 League of Legend champions. 
+
 1. List of Controllers and their short description (No more than 50 words for each controller)
     * / - Default which redirects to /index.
-        * test
     * /index - Default home page, which uses JavaScript to search and display results.
     * /login - Handle's login form validation and checks database for user.
     * /logout - Logs out user and makes changes in database.
