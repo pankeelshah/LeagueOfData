@@ -34,7 +34,7 @@ Already Created Accounts(username, password):
 
 Feel free to create your own accounts. To create an account you must provide a valid summoner name. You can find a list of summoner names in the Leaderboard tab.
 
-When champions to your favorite champions list, you must provide real champions. Here is a [list](https://na.leagueoflegends.com/en/game-info/champions/) containing all 147 League of Legend champions.
+When adding champions to your favorite champions list, you must provide real champions. Here is a [list](https://na.leagueoflegends.com/en/game-info/champions/) containing all 147 League of Legend champions.
 
 1. List of Controllers and their short description (No more than 50 words for each controller)
     * / - Default which redirects to /index.
