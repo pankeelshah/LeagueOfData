@@ -62,7 +62,8 @@ def default():
 @app.route('/index')
 def index():
     global auth
-    if User.query.filter_by(auth=True).first():
+    loggedInUser = User.query.filter_by(auth=True).first()
+    if loggedInUser is None:
         return render_template("index.html", loggedin=False)
     else:
         return render_template("index.html", loggedin=True)
