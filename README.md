@@ -8,7 +8,7 @@
    * Flask
    * Riot Games API
    * Google News API
-1. Detailed Description of the project (No more than 500 words)
+1. Detailed Description of the project (No more than 500 words)__
     test test test test test test test test test
     test test test test test test test test test
     test test test test test test test test test
@@ -31,19 +31,19 @@
     * /proxy/favoritechampions
     * /proxy/favoriteplayers
 1. List of Views and their short description (No more than 50 words for each view)
-    * base.html
-    * champions.html
-    * index.html
-    * leaderboard.html
-    * login.html
-    * news.html
-    * players.html
-    * rotation.html
-    * signup.html
+    * base.html - Base template which contains header and footer.
+    * champions.html - This page is only available when a user is logged in. User can add and remove their favorite champions.
+    * index.html - Default home page where League of Legend players stats can be searched.
+    * leaderboard.html - Page that displays top 300 League of Legends players on the Summoners Rift Ranked 5v5 leaderboard.
+    * login.html - Login page for users to log-in to website.
+    * news.html - Shows the latest news articles associated with League of Legends.
+    * players.html - This page is only available when a user is logged in. User can add and remove their favorite players.
+    * rotation.html - Shows the current free rotation of champions that is available for the current week.
+    * signup.html - Signup page to create a new account.
 1. List of Tables, their Structure and short description
-    * champion
-    * player
-    * user
+    * champion - Holds all user's favorite champions along with which user they belong to.
+    * player - Holds all user's favorite players along with which user they belong to.
+    * user - Holds all registered users and keeps track of currently logged in user.
 1. References/Resources:
     * https://getbootstrap.com/
     * https://www.w3schools.com/
