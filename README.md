@@ -32,12 +32,12 @@
     * /proxy/favoriteplayers
 1. List of Views and their short description (No more than 50 words for each view)
     * base.html - Base template which contains header and footer.
-    * champions.html - This page is only available when a user is logged in. User can add and remove their favorite champions.
+    * champions.html - Only available when a user is logged in. User can add and remove their favorite champions.
     * index.html - Default home page where League of Legend players stats can be searched.
-    * leaderboard.html - Page that displays top 300 League of Legends players on the Summoners Rift Ranked 5v5 leaderboard.
+    * leaderboard.html - Displays top 300 League of Legends players on the Summoners Rift Ranked 5v5 leaderboard.
     * login.html - Login page for users to log-in to website.
     * news.html - Shows the latest news articles associated with League of Legends.
-    * players.html - This page is only available when a user is logged in. User can add and remove their favorite players.
+    * players.html - Only available when a user is logged in. User can add and remove their favorite players.
     * rotation.html - Shows the current free rotation of champions that is available for the current week.
     * signup.html - Signup page to create a new account.
 1. List of Tables, their Structure and short description
