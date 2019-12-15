@@ -53,7 +53,7 @@ class Player(db.Model):
 
 db.create_all()
 
-summoner_name = ""
+# summoner_name = ""
 
 @app.route('/')
 def default():
@@ -69,8 +69,8 @@ def index():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    global auth
-    global summoner_name
+
+    # global summoner_name
     form = LoginForm(request.form)
 
     if not form.validate_on_submit():
@@ -85,8 +85,8 @@ def login():
             return render_template('login.html', form=form, message="Incorrect Username or Password")
         elif user.password == form.password.data:   
             # Confirming the user logged in
-            auth = True
-            summoner_name = user.summoner_name
+
+            # summoner_name = user.summoner_name
             user.auth = True
             db.session.commit()
             return render_template('index.html', form=form, loggedin=True)
@@ -95,17 +95,16 @@ def login():
 
 @app.route('/logout')
 def logout():
-    global auth
-    global summoner_name
-    auth = False
+
+    # global summoner_name
     loggedInUser = User.query.filter_by(auth=True).first()
     loggedInUser.auth = False
     db.session.commit()
-    return render_template("index.html", loggedin=auth)
+    return render_template("index.html", loggedin=False)
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
-    global auth
+
     form = SignupForm(request.form)
     if not form.validate_on_submit():
         return render_template('signup.html', form=form)
@@ -166,11 +165,11 @@ def rotation():
 
 @app.route('/champions', methods=['GET', 'POST'])
 def champions():
-    global auth
-    global summoner_name
+
+    # global summoner_name
 
     # Getting Logged In user.
-    loggedInuser = User.query.filter_by(summoner_name=summoner_name).first()
+    loggedInuser = User.query.filter_by(auth=True).first()
 
     champion_ls = ['Qiyana', 'Wukong', 'Jax', 'Kayn', 'Yuumi', 'Shaco', 'Warwick', 'Xayah', 'Sylas', 'Nidalee', 'Zyra', 'Kled', 'Brand', 'Rammus', 'Illaoi', 'Corki', 'Braum', 'Darius', 'Tryndamere', 'MissFortune', 'Yorick', 'Xerath', 'Sivir', 'Riven', 'Orianna', 'Sejuani', 'Gangplank', 'Malphite', 'Poppy', 'Kaisa', 'Jayce', 'Blitzcrank', 'Trundle', 'Karthus', 'Zoe', 'Graves', 'Lucian', 'Nocturne', 'Lux', 'Shyvana', 'Renekton', 'Fiora', 'Jinx', 'Kalista', 'Fizz', 'Kassadin', 'Sona', 'Vladimir', 'Viktor', 'Rakan', 'Kindred', 'Cassiopeia', 'Maokai', 'Ornn', 'Thresh', 'Kayle', 'Hecarim', 'Khazix', 'Olaf', 'Ziggs', 'Syndra', 'DrMundo', 'Karma', 'Annie', 'Akali', 'Leona', 'Yasuo', 'Kennen', 'Rengar', 'Ryze', 'Shen', 'Zac', 'Pantheon', 'Neeko', 'Bard', 'Sion', 'Vayne', 'Nasus', 'Fiddlesticks', 'TwistedFate', 'Chogath', 'Udyr', 'Morgana', 'Ivern', 'Volibear', 'Caitlyn', 'Anivia', 'Gnar', 'Rumble', 'Zilean', 'Azir', 'Diana', 'Skarner', 'Teemo', 'Urgot', 'Amumu', 'Galio', 'Heimerdinger', 'Ashe', 'Velkoz', 'Singed', 'Taliyah', 'Senna', 'Varus', 'Twitch', 'Garen', 'Nunu', 'MasterYi', 'Pyke', 'Elise', 'Alistar', 'Katarina', 'Ekko', 'Mordekaiser', 'KogMaw', 'Camille', 'Aatrox', 'Draven', 'TahmKench', 'Talon', 'XinZhao', 'Swain', 'AurelionSol', 'LeeSin', 'Aphelios', 'Taric', 'Malzahar', 'Lissandra', 'Tristana', 'RekSai', 'Irelia', 'JarvanIV', 'Nami', 'Jhin', 'Soraka', 'Veigar', 'Janna', 'Nautilus', 'Evelynn', 'Gragas', 'Zed', 'Vi', 'Lulu', 'Ahri', 'Quinn', 'Leblanc', 'Ezreal']
     
@@ -209,11 +208,11 @@ def champions():
 
 @app.route('/players', methods=['GET', 'POST'])
 def players():
-    global auth
-    global summoner_name
+
+    # global summoner_name
 
     # Getting Logged In user.
-    loggedInuser = User.query.filter_by(summoner_name=summoner_name).first()
+    loggedInuser = User.query.filter_by(auth=True).first()
 
     form = PlayerForm(request.form)
     if not form.validate_on_submit():
@@ -294,7 +293,7 @@ def proxyrotation():
 
 @app.route('/proxy/favoritechampions')
 def proxyfavoritechampions():
-    loggedInuser = User.query.filter_by(summoner_name=summoner_name).first()
+    loggedInuser = User.query.filter_by(auth=True).first()
     ls = []
     for champ in loggedInuser.Favorites:
         ls.append(champ.champion_name)
@@ -304,7 +303,7 @@ def proxyfavoritechampions():
 
 @app.route('/proxy/favoriteplayers')
 def proxyfavoriteplayers():
-    loggedInuser = User.query.filter_by(summoner_name=summoner_name).first()
+    loggedInuser = User.query.filter_by(auth=True).first()
     ls = []
     for player in loggedInuser.FavoritePlayers:
         ls.append(player.player_name)
