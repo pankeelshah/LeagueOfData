@@ -9,7 +9,7 @@ from wtforms.validators import Regexp
 import re
 import json
 from flask_bootstrap import Bootstrap
-from models import LoginForm, SignupForm, ChampionForm
+from models import LoginForm, SignupForm, ChampionForm, PlayerForm
 from flask_sqlalchemy import SQLAlchemy
 
 csrf = CSRFProtect()
@@ -30,6 +30,7 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True)
     password = db.Column(db.String(120))
     Favorites = db.relationship('Champion', backref='user', lazy=True)
+    FavoritePlayers = db.relationship('Player', backref='user', lazy=True)
 
     def __init__(self, username, email, password):
         self.summoner_name = username
@@ -39,6 +40,12 @@ class User(db.Model):
 class Champion(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     champion_name = db.Column(db.String(120), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'),
+        nullable=False)
+
+class Player(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    player_name = db.Column(db.String(120), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'),
         nullable=False)
 
@@ -180,6 +187,45 @@ def champions():
             db.session.commit()
             return render_template('champions.html', form=form, loggedin= auth, message="Champion has been Removed")
 
+@app.route('/players', methods=['GET', 'POST'])
+def players():
+    global auth
+    global summoner_name
+
+    # Getting Logged In user.
+    loggedInuser = User.query.filter_by(summoner_name=summoner_name).first()
+
+    form = PlayerForm(request.form)
+    if not form.validate_on_submit():
+        return render_template('players.html', form=form, loggedin= auth)
+    if request.method == 'POST':
+
+        player_name = form.add_player.data
+        playerExistsInDataBase = False
+        playerInDatabase = None
+
+        for player in loggedInuser.FavoritePlayers:
+            if player_name == player.player_name:
+                playerInDatabase = player
+                playerExistsInDataBase = True
+
+        if form.add_btn.data:
+            if playerExistsInDataBase:
+                return render_template('players.html', form=form, loggedin= auth, message = "Champion already added.")
+            
+            player = Player(player_name=player_name, user_id=loggedInuser.id)
+            db.session.add(player)
+            db.session.commit()
+            return render_template('players.html', form=form, loggedin= auth, message="Player has been Added")
+
+        if form.remove_btn.data:
+            if not playerExistsInDataBase:
+                return render_template('players.html', form=form, loggedin= auth, message = "Champion is not in favorites.")
+            
+            db.session.delete(playerInDatabase)
+            db.session.commit()
+            return render_template('players.html', form=form, loggedin= auth, message="Player has been Removed")
+
 @app.route('/proxy/<region>/<summoner_name>')
 def proxy(region, summoner_name):
     #First request to get id
@@ -232,6 +278,16 @@ def proxyfavoritechampions():
     ls = []
     for champ in loggedInuser.Favorites:
         ls.append(champ.champion_name)
+    d = {}
+    d[0] =  ls
+    return d
+
+@app.route('/proxy/favoriteplayers')
+def proxyfavoriteplayers():
+    loggedInuser = User.query.filter_by(summoner_name=summoner_name).first()
+    ls = []
+    for player in loggedInuser.FavoritePlayers:
+        ls.append(player.player_name)
     d = {}
     d[0] =  ls
     return d

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block body_attribs %} onload = "getPlayers()"{% endblock body_attribs %}
+{% block players %} class="active"  {% endblock %}
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="/static/players.css">
+<script src="/static/players.js"></script>
+{% endblock styles%}
+
+{% block content %}
+<form action="/players" class="form" method="post" role="form">
+	{{ form.csrf_token() }}
+	<div id="optionSelect">
+		<div>
+			<h1 id = "text" class="h3 mb-3 font-weight-normal">Add Your Favorite Players</h1>
+			<p id="text">{{message}}</p>
+			{{ wtf.form_field(form.add_player, class='form-control', placeholder='Player Name') }}
+			{{ wtf.form_field(form.add_btn, onclick="getPlayers()", class='btn btn-primary btn-block', placeholder='Champion Name') }}
+			{{ wtf.form_field(form.remove_btn, onclick="getPlayers()", class='btn btn-primary btn-block', placeholder='Champion Name') }}
+		</div>		
+	</div>
+</form>
+<br>
+<br>
+<div class="cardContainer" id="wrapper"></div>
+{% endblock %}

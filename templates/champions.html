@@ -14,7 +14,7 @@
 	<div id="optionSelect">
 		<div>
 			<h1 id = "text" class="h3 mb-3 font-weight-normal">Add Your Favorite Champions</h1>
-			<p>{{message}}</p>
+			<p id="text">{{message}}</p>
 			{{ wtf.form_field(form.add_champion, class='form-control', placeholder='Champion Name') }}
 			{{ wtf.form_field(form.add_btn, onclick="getChampions()", class='btn btn-primary btn-block', placeholder='Champion Name') }}
 			{{ wtf.form_field(form.remove_btn, onclick="getChampions()", class='btn btn-primary btn-block', placeholder='Champion Name') }}
