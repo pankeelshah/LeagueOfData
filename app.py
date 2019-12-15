@@ -28,6 +28,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     summoner_name = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(120), unique=True)
+    auth = db.Column(db.Boolean, default=False)
     password = db.Column(db.String(120))
     Favorites = db.relationship('Champion', backref='user', lazy=True)
     FavoritePlayers = db.relationship('Player', backref='user', lazy=True)
@@ -36,6 +37,7 @@ class User(db.Model):
         self.summoner_name = username
         self.email = email
         self.password = password
+        self.auth = False
 
 class Champion(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -60,7 +62,10 @@ def default():
 @app.route('/index')
 def index():
     global auth
-    return render_template("index.html", loggedin=auth)
+    if User.query.filter_by(auth=True).first():
+        return render_template("index.html", loggedin=False)
+    else:
+        return render_template("index.html", loggedin=True)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -82,6 +87,8 @@ def login():
             # Confirming the user logged in
             auth = True
             summoner_name = user.summoner_name
+            user.auth = True
+            db.session.commit()
             return render_template('index.html', form=form, loggedin=auth)
         else:
             return render_template('login.html', form=form, message="Incorrect Password", loggedin=auth)
@@ -91,7 +98,9 @@ def logout():
     global auth
     global summoner_name
     auth = False
-    summoner_name = ""
+    loggedInUser = User.query.filter_by(auth=True).first()
+    loggedInUser.auth = False
+    db.session.commit()
     return render_template("index.html", loggedin=auth)
 
 @app.route('/signup', methods=['GET', 'POST'])
