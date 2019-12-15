@@ -90,9 +90,9 @@ def login():
             summoner_name = user.summoner_name
             user.auth = True
             db.session.commit()
-            return render_template('index.html', form=form, loggedin=auth)
+            return render_template('index.html', form=form, loggedin=True)
         else:
-            return render_template('login.html', form=form, message="Incorrect Password", loggedin=auth)
+            return render_template('login.html', form=form, message="Incorrect Password", loggedin=False)
 
 @app.route('/logout')
 def logout():
@@ -116,13 +116,13 @@ def signup():
         userSummoner = User.query.filter_by(summoner_name=form.summoner.data).first()
 
         if userEmail is not None:
-            return render_template('signup.html', form=form, message="Email already exists.", loggedin=auth)
+            return render_template('signup.html', form=form, message="Email already exists.", loggedin=False)
         
         if userSummoner is not None:
-            return render_template('signup.html', form=form, message="Summoner already exists.", loggedin=auth)
+            return render_template('signup.html', form=form, message="Summoner already exists.", loggedin=False)
 
         if not summonerExists(form.summoner.data):
-            return render_template('signup.html', form=form, message="Summoner Name does not exist.", loggedin=auth)
+            return render_template('signup.html', form=form, message="Summoner Name does not exist.", loggedin=False)
 
         user = User(form.summoner.data, form.email_addr.data, form.password.data)
         db.session.add(user)
@@ -141,18 +141,29 @@ def summonerExists(summoner_name):
 
 @app.route('/news')
 def news():
-    global auth
-    return render_template("news.html", loggedin=auth)
+    loggedInUser = User.query.filter_by(auth=True).first()
+    if loggedInUser is None:
+        return render_template("news.html", loggedin=False)
+    else:
+        return render_template("news.html", loggedin=True)
 
 @app.route('/leaderboard')
 def leaderboard():
-    global auth
-    return render_template("leaderboard.html", loggedin=auth)
+    loggedInUser = User.query.filter_by(auth=True).first()
+    if loggedInUser is None:
+        return render_template("leaderboard.html", loggedin=False)
+    else:
+        return render_template("leaderboard.html", loggedin=True)
+    # return render_template("leaderboard.html", loggedin=auth)
 
 @app.route('/rotation')
 def rotation():
-    global auth
-    return render_template("rotation.html", loggedin=auth)
+    loggedInUser = User.query.filter_by(auth=True).first()
+    if loggedInUser is None:
+        return render_template("rotation.html", loggedin=False)
+    else:
+        return render_template("rotation.html", loggedin=True)
+    
 
 @app.route('/champions', methods=['GET', 'POST'])
 def champions():
@@ -178,24 +189,24 @@ def champions():
                 championExistsInDataBase = True
         if form.add_btn.data:
             if champion_name not in champion_ls:
-                return render_template('champions.html', form=form, loggedin= auth, message = "Champion does not exists.")
+                return render_template('champions.html', form=form, loggedin=True, message = "Champion does not exists.")
             if championExistsInDataBase:
-                return render_template('champions.html', form=form, loggedin= auth, message = "Champion already added.")
+                return render_template('champions.html', form=form, loggedin= True, message = "Champion already added.")
             
             champion = Champion(champion_name=champion_name, user_id=loggedInuser.id)
             db.session.add(champion)
             db.session.commit()
-            return render_template('champions.html', form=form, loggedin= auth, message="Champion has been Added")
+            return render_template('champions.html', form=form, loggedin= True, message="Champion has been Added")
 
         if form.remove_btn.data:
             if champion_name not in champion_ls:
-                return render_template('champions.html', form=form, loggedin= auth, message = "Champion does not exists.")
+                return render_template('champions.html', form=form, loggedin= True, message = "Champion does not exists.")
             if not championExistsInDataBase:
-                return render_template('champions.html', form=form, loggedin= auth, message = "Champion is not in favorites.")
+                return render_template('champions.html', form=form, loggedin= True, message = "Champion is not in favorites.")
             
             db.session.delete(championInDatabase)
             db.session.commit()
-            return render_template('champions.html', form=form, loggedin= auth, message="Champion has been Removed")
+            return render_template('champions.html', form=form, loggedin= True, message="Champion has been Removed")
 
 @app.route('/players', methods=['GET', 'POST'])
 def players():
@@ -221,20 +232,20 @@ def players():
 
         if form.add_btn.data:
             if playerExistsInDataBase:
-                return render_template('players.html', form=form, loggedin= auth, message = "Champion already added.")
+                return render_template('players.html', form=form, loggedin= True, message = "Champion already added.")
             
             player = Player(player_name=player_name, user_id=loggedInuser.id)
             db.session.add(player)
             db.session.commit()
-            return render_template('players.html', form=form, loggedin= auth, message="Player has been Added")
+            return render_template('players.html', form=form, loggedin= True, message="Player has been Added")
 
         if form.remove_btn.data:
             if not playerExistsInDataBase:
-                return render_template('players.html', form=form, loggedin= auth, message = "Champion is not in favorites.")
+                return render_template('players.html', form=form, loggedin= True, message = "Champion is not in favorites.")
             
             db.session.delete(playerInDatabase)
             db.session.commit()
-            return render_template('players.html', form=form, loggedin= auth, message="Player has been Removed")
+            return render_template('players.html', form=form, loggedin= True, message="Player has been Removed")
 
 @app.route('/proxy/<region>/<summoner_name>')
 def proxy(region, summoner_name):
