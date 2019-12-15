@@ -27,5 +27,11 @@
 </form>
 <br>
 <br>
-<div class="cardContainer" id="wrapper"></div>
+{% for photo in photos %}
+    <li>
+        <img class="img-responsive portrait" src="{{ photo.path }}" alt="Some description"/>
+        <textarea name="{{ photo.id }}" placeholder="add some description" rows="3">{% if photo.description %}{{ photo.description }}{% endif %}</textarea>
+    </li>
+{% endfor %}
+<!-- <div class="cardContainer" id="wrapper"></div> -->
 {% endblock %}
