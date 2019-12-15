@@ -53,8 +53,6 @@ class Player(db.Model):
 
 db.create_all()
 
-summoner_name = ""
-
 @app.route('/')
 def default():
     return redirect(url_for('index'))
@@ -69,8 +67,6 @@ def index():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-
-    global summoner_name
     form = LoginForm(request.form)
 
     if not form.validate_on_submit():
@@ -85,8 +81,6 @@ def login():
             return render_template('login.html', form=form, message="Incorrect Username or Password")
         elif user.password == form.password.data:   
             # Confirming the user logged in
-            auth = True
-            summoner_name = user.summoner_name
             user.auth = True
             db.session.commit()
             return render_template('index.html', form=form, loggedin=True)
@@ -95,9 +89,6 @@ def login():
 
 @app.route('/logout')
 def logout():
-
-    global summoner_name
-    auth = False
     loggedInUser = User.query.filter_by(auth=True).first()
     loggedInUser.auth = False
     db.session.commit()
@@ -105,7 +96,6 @@ def logout():
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
-
     form = SignupForm(request.form)
     if not form.validate_on_submit():
         return render_template('signup.html', form=form)
@@ -166,9 +156,6 @@ def rotation():
 
 @app.route('/champions', methods=['GET', 'POST'])
 def champions():
-
-    global summoner_name
-
     # Getting Logged In user.
     loggedInuser = User.query.filter_by(auth=True).first()
 
@@ -209,9 +196,6 @@ def champions():
 
 @app.route('/players', methods=['GET', 'POST'])
 def players():
-
-    global summoner_name
-
     # Getting Logged In user.
     loggedInuser = User.query.filter_by(auth=True).first()
 
@@ -266,7 +250,6 @@ def proxy(region, summoner_name):
         resp = Response()
         resp.headers['Content-Type'] = 'application/json'
         return resp
-
 
 @app.route('/proxy/news/<type>')
 def proxynews(type):
