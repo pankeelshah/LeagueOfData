@@ -15,15 +15,16 @@
     test test test test test test test test test
 1. List of Controllers and their short description (No more than 50 words for each controller)
     * / - Default which redirects to /index.
+        * test
     * /index - Default home page, which uses JavaScript to search and display results.
     * /login - Handle's login form validation and checks database for user.
-    * /logout - Log's out user and makes changes in database.
+    * /logout - Logs out user and makes changes in database.
     * /signup - Handle's signup form validation and adds user to database.
     * /news - Uses onLoad() function to call JavaScript and display news.
     * /leaderboard - Uses onLoad() function to call JavaScript and display leaderboard.
     * /rotation - Uses onLoad() function to call JavaScript and display current free rotation.
-    * /champions - Use's form validation to check for input, make sure that champion exists, and check weather the champion is in the database already. Depending on if user has clicked add or remove, adds or removes the champion from the database.
-    * /players - Use's form validation to check for input, and make sure that the champion is in the database already. Depending on if user has clicked add or remove, adds or removes the player from the database.
+    * /champions - Uses form validation to check for input, make sure that champion exists, and check weather the champion is in the database already. Depending on if user has clicked add or remove, adds or removes the champion from the database.
+    * /players - Uses form validation to check for input, and make sure that the champion is in the database already. Depending on if user has clicked add or remove, adds or removes the player from the database.
     * /proxy/&lt;region&gt;/&lt;summoner_name&gt; - Makes an API call to Riot's API to get statistics on a specific player. 
     * /proxy/news/&lt;type&gt; - Makes an API call to Google News API to get the latest League of Legends articles.
     * /proxy/challenger - Makes an API call to Riot's API to get the top 300 players on the leaderboard.
