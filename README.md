@@ -29,12 +29,12 @@ On the Players page, users can keep track of their favorite players. They can ad
 To aid with testing purposes we have provided additional information which may be used to verify website functionality. 
 
 Already Created Accounts(username, password): 
-* admin1@example.com, admin1
-* admin2@example.com, admin2
+* [admin1@example.com](admin1@example.com), admin1
+* [admin2@example.com](admin2@example.com), admin2
 
 Feel free to create your own accounts. To create an account you must provide a valid summoner name. You can find a list of summoner names in the Leaderboard tab.
 
-When adding to the champions to your favorite champions list, you must provide real champions. Here is a (list)[https://na.leagueoflegends.com/en/game-info/champions/] containing all 147 League of Legend champions. 
+When champions to your favorite champions list, you must provide real champions. Here is a [list](https://na.leagueoflegends.com/en/game-info/champions/) containing all 147 League of Legend champions.
 
 1. List of Controllers and their short description (No more than 50 words for each controller)
     * / - Default which redirects to /index.
