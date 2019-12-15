@@ -24,8 +24,8 @@
     * /rotation
     * /champions
     * /players
-    * /proxy/&ltregion&gt/&ltsummoner_name&gt
-    * /proxy/news/&lttype&gt
+    * /proxy/&lt;region&gt;/&lt;summoner_name&gt;
+    * /proxy/news/&lt;type&gt;
     * /proxy/challenger
     * /proxy/rotation
     * /proxy/favoritechampions
