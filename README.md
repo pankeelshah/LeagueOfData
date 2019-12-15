@@ -4,8 +4,8 @@
 ## Link to live Application: https://league-of-legends-data.herokuapp.com/
 ## Link to Github Code Repository: https://github.com/pankeelshah/LeagueofData
 ## List of Technologies/API's Used:
-   * BootStrap
-   * BootStrap Templates
+   * Bootstrap
+   * Bootstrap Templates
    * Flask
    * SQLAlchemy
    * WTForms
