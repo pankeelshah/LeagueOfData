@@ -177,7 +177,7 @@ def champions():
     
     form = ChampionForm(request.form)
     if not form.validate_on_submit():
-        return render_template('champions.html', form=form, loggedin= auth)
+        return render_template('champions.html', form=form, loggedin= True)
     if request.method == 'POST':
 
         champion_name = form.add_champion.data.capitalize()
@@ -218,7 +218,7 @@ def players():
 
     form = PlayerForm(request.form)
     if not form.validate_on_submit():
-        return render_template('players.html', form=form, loggedin= auth)
+        return render_template('players.html', form=form, loggedin= True)
     if request.method == 'POST':
 
         player_name = form.add_player.data
