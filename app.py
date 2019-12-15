@@ -213,7 +213,7 @@ def players():
     global summoner_name
 
     # Getting Logged In user.
-    loggedInuser = User.query.filter_by(summoner_name=summoner_name).first()
+    loggedInuser = User.query.filter_by(auth=True).first()
 
     form = PlayerForm(request.form)
     if not form.validate_on_submit():
@@ -304,7 +304,7 @@ def proxyfavoritechampions():
 
 @app.route('/proxy/favoriteplayers')
 def proxyfavoriteplayers():
-    loggedInuser = User.query.filter_by(summoner_name=summoner_name).first()
+    loggedInuser = User.query.filter_by(auth=True).first()
     ls = []
     for player in loggedInuser.FavoritePlayers:
         ls.append(player.player_name)
