@@ -13,11 +13,11 @@
 	{{ form.csrf_token() }}
 	<div id="optionSelect">
 		<div>
-			<h1 class="h3 mb-3 font-weight-normal">Add You Favorite Champions</h1>
+			<h1 id = "text" class="h3 mb-3 font-weight-normal">Add Your Favorite Champions</h1>
 			<p>{{message}}</p>
 			{{ wtf.form_field(form.add_champion, class='form-control', placeholder='Champion Name') }}
-			{{ wtf.form_field(form.add_btn, onclick="teste()", class='btn btn-primary btn-block', placeholder='Champion Name') }}
-			{{ wtf.form_field(form.remove_btn, onclick="teste()", class='btn btn-primary btn-block', placeholder='Champion Name') }}
+			{{ wtf.form_field(form.add_btn, onclick="getChampions()", class='btn btn-primary btn-block', placeholder='Champion Name') }}
+			{{ wtf.form_field(form.remove_btn, onclick="getChampions()", class='btn btn-primary btn-block', placeholder='Champion Name') }}
 
 			<!-- <button id="addChampBtn" type=submit class='btn btn-primary btn-block'>Add Champion</button> <br>
 			<button id="addChampBtn" type=submit class='btn btn-primary btn-block'>Add Champion</button> <br> -->
@@ -25,4 +25,7 @@
 					
 	</div>
 </form>
+<br>
+<br>
+<div class="cardContainer" id="wrapper"></div>
 {% endblock %}

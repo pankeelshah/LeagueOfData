@@ -75,7 +75,6 @@ def login():
             # Confirming the user logged in
             auth = True
             summoner_name = user.summoner_name
-            print(summoner_name)
             return render_template('index.html', form=form, loggedin=auth)
         else:
             return render_template('login.html', form=form, message="Incorrect Password", loggedin=auth)
@@ -160,8 +159,6 @@ def champions():
             if champion_name == champion.champion_name:
                 championInDatabase = champion
                 championExistsInDataBase = True
-        print(form.add_btn)
-        print(form.remove_btn)
         if form.add_btn.data:
             if champion_name not in champion_ls:
                 return render_template('champions.html', form=form, loggedin= auth, message = "Champion does not exists.")
@@ -229,17 +226,27 @@ def proxyrotation():
     resp.headers['Content-Type'] = 'application/json'
     return resp
 
-@app.route('/proxy/champions')
-def proxychampions():
-    region = "na1"
-    #First request to get id
-    result = requests.get('https://' + region + '.api.riotgames.com/lol/summoner/v4/summoners/by-name/' + summoner_name + '?api_key=' + app.config["SECRET_KEY"])
-    json_data = result.json()
-    account_id = json_data['id']
+@app.route('/proxy/favoritechampions')
+def proxyfavoritechampions():
+    loggedInuser = User.query.filter_by(summoner_name=summoner_name).first()
+    ls = []
+    for champ in loggedInuser.Favorites:
+        ls.append(champ.champion_name)
+    d = {}
+    d[0] =  ls
+    return d
 
-    #Second request to get account data
-    url = 'https://na1.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/' + account_id + '?api_key=' + app.config["SECRET_KEY"]
-    result = requests.get(url)
-    resp = Response(result.text)
-    resp.headers['Content-Type'] = 'application/json'
-    return resp
+# @app.route('/proxy/champions')
+# def proxychampions():
+#     region = "na1"
+#     #First request to get id
+#     result = requests.get('https://' + region + '.api.riotgames.com/lol/summoner/v4/summoners/by-name/' + summoner_name + '?api_key=' + app.config["SECRET_KEY"])
+#     json_data = result.json()
+#     account_id = json_data['id']
+
+#     #Second request to get account data
+#     url = 'https://na1.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/' + account_id + '?api_key=' + app.config["SECRET_KEY"]
+#     result = requests.get(url)
+#     resp = Response(result.text)
+#     resp.headers['Content-Type'] = 'application/json'
+#     return resp
