@@ -69,7 +69,7 @@ def index():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    global auth
+
     global summoner_name
     form = LoginForm(request.form)
 
@@ -95,17 +95,17 @@ def login():
 
 @app.route('/logout')
 def logout():
-    global auth
+
     global summoner_name
     auth = False
     loggedInUser = User.query.filter_by(auth=True).first()
     loggedInUser.auth = False
     db.session.commit()
-    return render_template("index.html", loggedin=auth)
+    return render_template("index.html", loggedin=False)
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
-    global auth
+
     form = SignupForm(request.form)
     if not form.validate_on_submit():
         return render_template('signup.html', form=form)
@@ -166,7 +166,7 @@ def rotation():
 
 @app.route('/champions', methods=['GET', 'POST'])
 def champions():
-    global auth
+
     global summoner_name
 
     # Getting Logged In user.
@@ -209,7 +209,7 @@ def champions():
 
 @app.route('/players', methods=['GET', 'POST'])
 def players():
-    global auth
+
     global summoner_name
 
     # Getting Logged In user.
