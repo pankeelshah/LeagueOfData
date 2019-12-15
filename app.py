@@ -52,7 +52,7 @@ class Player(db.Model):
         nullable=False)
 
 db.create_all()
-auth = False
+
 summoner_name = ""
 
 @app.route('/')
@@ -61,7 +61,6 @@ def default():
 
 @app.route('/index')
 def index():
-    global auth
     loggedInUser = User.query.filter_by(auth=True).first()
     if loggedInUser is None:
         return render_template("index.html", loggedin=False)

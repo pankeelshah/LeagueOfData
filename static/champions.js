@@ -11,6 +11,7 @@ async function getChampions(){
             var champions_list = data[0]
             var dataLength = champions_list.length;
             var mainDiv = document.querySelector(".cardContainer");
+            mainDiv.innerHTML = "";
             for(var i = 0; i < dataLength; i++){
                 displayChampions(mainDiv, champions_list[i], i + 1);
             }
