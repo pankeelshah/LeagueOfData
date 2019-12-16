@@ -25,3 +25,8 @@ class PlayerForm(FlaskForm):
         add_player = TextField('', validators=[InputRequired()])
         add_btn = SubmitField(label='Add', id="submitBtn")
         remove_btn = SubmitField(label='Remove', id="submitBtn")
+
+class SpellForm(FlaskForm):
+        add_spell = TextField('', validators=[InputRequired()])
+        add_btn = SubmitField(label='Add', id="submitBtn")
+        remove_btn = SubmitField(label='Remove', id="submitBtn")

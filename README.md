@@ -12,7 +12,6 @@
    * Riot Games API
    * Google News API
 ## Detailed Description of the project: <br />
-
 League of Legend's web application created using the Flask framework which allows users to get many different types of League of Legends information, and also store their own information. 
 
 On the Home page, users can search for information on specific League of Legend's players and get statistics on the different game modes that they play, and their tier, rank, wins, losses and win rate in those game modes. 
@@ -39,6 +38,8 @@ Feel free to create your own accounts. To create an account you must provide a v
 
 When adding champions to your favorite champions list, you must provide real champions. Here is a [list](https://na.leagueoflegends.com/en/game-info/champions/) containing all 147 League of Legend champions.
 
+When adding spells to your favorite spells list, you must provide real spells. Here is a [list](https://leagueoflegends.fandom.com/wiki/Summoner_spell) containing all spells.
+
 ## List of Controllers and their short description:
 * / - Default which redirects to /index.
 * /index - Default home page, which uses JavaScript to search and display results.
@@ -50,12 +51,14 @@ When adding champions to your favorite champions list, you must provide real cha
 * /rotation - Uses onLoad() function to call JavaScript and display current free rotation.
 * /champions - Uses form validation to check for input, make sure that champion exists, and check weather the champion is in the database already. Depending on if user has clicked add or remove, adds or removes the champion from the database.
 * /players - Uses form validation to check for input, and make sure that the champion is in the database already. Depending on if user has clicked add or remove, adds or removes the player from the database.
+* /spells - Uses form validation to check for input, and make sure that the spell is in the database already. Depending on if user has clicked add or remove, adds or removes the spell from the database.
 * /proxy/&lt;region&gt;/&lt;summoner_name&gt; - Makes an API call to Riot's API to get statistics on a specific player. 
 * /proxy/news/&lt;type&gt; - Makes an API call to Google News API to get the latest League of Legends articles.
 * /proxy/challenger - Makes an API call to Riot's API to get the top 300 players on the leaderboard.
 * /proxy/rotation - Makes an API call to Riot's API to get the current week's free champion rotation. 
 * /proxy/favoritechampions - Gets the current users favorite champions from the database. 
-* /proxy/favoriteplayers - Gets the current users favorite players from the database. 
+* /proxy/favoriteplayers - Gets the current users favorite players from the database.
+* /proxy/favoritespells - Gets the current users favorite spells from the database.
 ## List of Views and their short description:
 * base.html - Base template which contains header and footer.
 * champions.html - Only available when a user is logged in. User can add and remove their favorite champions. This will display their favorite champions which can be clicked to visit a website with more information on them.
@@ -66,10 +69,12 @@ When adding champions to your favorite champions list, you must provide real cha
 * players.html - Only available when a user is logged in. User can add and remove their favorite players. This will display their favorite players which can be clicked to visit a website with more information on them.
 * rotation.html - Shows the current free rotation of champions that is available for the current week. The champions can be clicked to visit a website with more information on them.
 * signup.html - Signup page to create a new account.
+* spells.html - Only available when a user is logged in. User can add and remove their favorite spells. This will display their favorite spells which can be clicked to visit a website with more information on them.
 ## List of Tables, their Structure and short description:
 * champion - Holds all user's favorite champions along with which user they belong to.
 * player - Holds all user's favorite players along with which user they belong to.
 * user - Holds all registered users and keeps track of currently logged in user.
+* spell - Holds all user's favorite spells along with which user they belong to.
 ## References/Resources:
 * https://getbootstrap.com/
 * https://www.w3schools.com/

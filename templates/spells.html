@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block body_attribs %} onload = "getSpells()"{% endblock body_attribs %}
+{% block spell %} class="active"  {% endblock %}
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="/static/spells.css">
+<script src="/static/spells.js"></script>
+{% endblock styles%}
+
+{% block content %}
+<form action="/spells" class="form" method="post" role="form">
+	{{ form.csrf_token() }}
+	<div id="optionSelect">
+		<div>
+			<h1 id = "text" class="h3 mb-3 font-weight-normal">Add Your Favorite Champions</h1>
+			<p id="text">{{message}}</p>
+			{{ wtf.form_field(form.add_spell, class='form-control', placeholder='Spell Name') }}
+			{{ wtf.form_field(form.add_btn, onclick="getSpells()", class='btn btn-primary btn-block', placeholder='Spell Name') }}
+			{{ wtf.form_field(form.remove_btn, onclick="getSpell()", class='btn btn-primary btn-block', placeholder='Spell Name') }}
+
+			<!-- <button id="addChampBtn" type=submit class='btn btn-primary btn-block'>Add Champion</button> <br>
+			<button id="addChampBtn" type=submit class='btn btn-primary btn-block'>Add Champion</button> <br> -->
+		</div>
+					
+	</div>
+</form>
+<br>
+<br>
+<div class="cardContainer" id="wrapper"></div>
+{% endblock %}

@@ -9,7 +9,7 @@ from wtforms.validators import Regexp
 import re
 import json
 from flask_bootstrap import Bootstrap
-from models import LoginForm, SignupForm, ChampionForm, PlayerForm
+from models import LoginForm, SignupForm, ChampionForm, PlayerForm, SpellForm
 from flask_sqlalchemy import SQLAlchemy
 
 csrf = CSRFProtect()
@@ -32,6 +32,7 @@ class User(db.Model):
     password = db.Column(db.String(120))
     Favorites = db.relationship('Champion', backref='user', lazy=True)
     FavoritePlayers = db.relationship('Player', backref='user', lazy=True)
+    FavoriteSpells = db.relationship('Spell', backref='user', lazy=True)
 
     def __init__(self, username, email, password):
         self.summoner_name = username
@@ -48,6 +49,12 @@ class Champion(db.Model):
 class Player(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     player_name = db.Column(db.String(120), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'),
+        nullable=False)
+
+class Spell(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    spell_name = db.Column(db.String(120), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'),
         nullable=False)
 
@@ -215,7 +222,7 @@ def players():
 
         if form.add_btn.data:
             if playerExistsInDataBase:
-                return render_template('players.html', form=form, loggedin= True, message = "Champion already added.")
+                return render_template('players.html', form=form, loggedin= True, message = "Player already added.")
             
             player = Player(player_name=player_name, user_id=loggedInuser.id)
             db.session.add(player)
@@ -224,11 +231,52 @@ def players():
 
         if form.remove_btn.data:
             if not playerExistsInDataBase:
-                return render_template('players.html', form=form, loggedin= True, message = "Champion is not in favorites.")
+                return render_template('players.html', form=form, loggedin= True, message = "Player is not in favorites.")
             
             db.session.delete(playerInDatabase)
             db.session.commit()
             return render_template('players.html', form=form, loggedin= True, message="Player has been Removed")
+
+@app.route('/spells', methods=['GET', 'POST'])
+def spell():
+    loggedInuser = User.query.filter_by(auth=True).first()
+
+    spell_ls = ["Barrier", "Clarity", "Clense", "Exhaust", "Flash", "Ghost", "Heal", "Ignite", "Smite", "Teleport"]
+
+    form = SpellForm(request.form)
+    if not form.validate_on_submit():
+        return render_template('spells.html', form=form, loggedin= True)
+    if request.method == 'POST':
+
+        spell_name = form.add_spell.data.capitalize()
+        spellExistsInDataBase = False
+        spellInDatabase = None
+
+        for spell in loggedInuser.FavoriteSpells:
+            if spell_name == spell.spell_name:
+                spellInDatabase = spell
+                spellExistsInDataBase = True
+
+        if form.add_btn.data:
+            if spell_name not in spell_ls:
+                return render_template('spells.html', form=form, loggedin=True, message = "Spell does not exists.")
+            if spellExistsInDataBase:
+                return render_template('spells.html', form=form, loggedin= True, message = "Spell already added.")
+            
+            spell = Spell(spell_name=spell_name, user_id=loggedInuser.id)
+            db.session.add(spell)
+            db.session.commit()
+            return render_template('spells.html', form=form, loggedin= True, message="Spell has been Added")
+
+        if form.remove_btn.data:
+            if spell_name not in spell_ls:
+                return render_template('spells.html', form=form, loggedin=True, message = "Spell does not exists.")
+            if not spellExistsInDataBase:
+                return render_template('spells.html', form=form, loggedin= True, message = "Spell is not in favorites.")
+            
+            db.session.delete(spellInDatabase)
+            db.session.commit()
+            return render_template('spells.html', form=form, loggedin= True, message="Spell has been Removed")
 
 @app.route('/proxy/<region>/<summoner_name>')
 def proxy(region, summoner_name):
@@ -291,6 +339,16 @@ def proxyfavoriteplayers():
     ls = []
     for player in loggedInuser.FavoritePlayers:
         ls.append(player.player_name)
+    d = {}
+    d[0] =  ls
+    return d
+
+@app.route('/proxy/favoritespells')
+def proxyfavoritespells():
+    loggedInuser = User.query.filter_by(auth=True).first()
+    ls = []
+    for spell in loggedInuser.FavoriteSpells:
+        ls.append(spell.spell_name)
     d = {}
     d[0] =  ls
     return d
