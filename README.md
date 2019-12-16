@@ -1,16 +1,20 @@
 # LeagueWebsite
 
+## Group Members:
+* Pankeel Shah - shahx317
+* Nikhil Tammana - tamma008
+
 ## Project Type: Plan A
 ## Link to live Application: https://league-of-legends-data.herokuapp.com/
 ## Link to Github Code Repository: https://github.com/pankeelshah/LeagueofData
 ## List of Technologies/API's Used:
-   * Bootstrap
-   * Bootstrap Templates
-   * Flask
-   * SQLAlchemy
-   * WTForms
-   * Riot Games API
-   * Google News API
+ * Bootstrap
+ * Bootstrap Templates
+ * Flask
+ * SQLAlchemy
+ * WTForms
+ * Riot Games API
+ * Google News API
 ## Detailed Description of the project: <br />
 League of Legend's web application created using the Flask framework which allows users to get many different types of League of Legends information, and also store their own information. 
 
