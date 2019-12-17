@@ -5,8 +5,10 @@
 * Nikhil Tammana - tamma008
 
 ## Project Type: Plan A
-## Link to live Application: https://league-of-legends-data.herokuapp.com/
-## Link to Github Code Repository: https://github.com/pankeelshah/LeagueofData
+## Link to live Application: 
+* https://league-of-legends-data.herokuapp.com/
+## Link to Github Code Repository: 
+* https://github.com/pankeelshah/LeagueofData
 ## List of Technologies/API's Used:
  * Bootstrap
  * Bootstrap Templates
@@ -76,9 +78,13 @@ When adding spells to your favorite spells list, you must provide real spells. H
 * spells.html - Only available when a user is logged in. User can add and remove their favorite spells. This will display their favorite spells which can be clicked to visit a website with more information on them.
 ## List of Tables, their Structure and short description:
 * champion - Holds all user's favorite champions along with which user they belong to.
+  * Short Description
 * player - Holds all user's favorite players along with which user they belong to.
+  * Short Description
 * user - Holds all registered users and keeps track of currently logged in user.
+  * Short Description
 * spell - Holds all user's favorite spells along with which user they belong to.
+  * Short Description
 ## References/Resources:
 * https://getbootstrap.com/
 * https://www.w3schools.com/
